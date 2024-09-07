@@ -2,7 +2,7 @@ import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import type { ColumnsType } from "antd/es/table";
 import { useState, useEffect } from "react";
-import { ListStudents, ListPersonal,ListAddress, ListFamily,ListOther } from "../../services/https/index";
+import { GetAddressById ,GetStudentsById,GetPersonalById,GetOtherById,GetFamilyById} from "../../services/https/index";
 import { PersonalInterface } from "../../interfaces/Personal";
 import { StudentInterface } from "../../interfaces/Student";
 import { AddressInterface } from "../../interfaces/Address";
@@ -15,68 +15,62 @@ interface CombinedData extends PersonalInterface, StudentInterface ,AddressInter
 
 function Personal() {
   const navigate = useNavigate();
-  const [data, setData] = useState<CombinedData[]>([]);
+  const [studentData, setStudentData] = useState<CombinedData | null>(null); // Store combined data
   const [messageApi, contextHolder] = message.useMessage();
-  
-  const getData = async () => {
+
+  const getStudentData = async (id: string) => {
     try {
-      const [personalRes, studentRes, addressRes, familyRes, otherRes] = await Promise.all([
-        ListPersonal(),
-        ListStudents(),
-        ListAddress(),
-        ListFamily(),
-        ListOther()
+      // Fetch all related data by student ID
+      const [studentRes,personalRes,addressRes,familyRes,otherRes ] = await Promise.all([
+        GetStudentsById(id),
+        GetPersonalById(id),
+        GetAddressById(id),
+        GetFamilyById(id),
+        GetOtherById(id),
       ]);
-  
-      if (personalRes.status === 200 
-        && studentRes.status === 200 
-        && addressRes.status === 200
-        && familyRes.status === 200
-        && otherRes.status === 200
 
-      ) 
-      {
-        console.log("Personal Response:", personalRes);
-        console.log("Student Response:", studentRes);
-        console.log("Address Response:", addressRes);
-        console.log("Family Response:", familyRes);
-        console.log("Other Response:", otherRes);
-
-  
-        // ใช้ Student เป็นหลักในการเชื่อมโยงข้อมูล
-        const combinedData = studentRes.data.map((student: StudentInterface) => {
-          const matchingPersonal = personalRes.data.find((personal: PersonalInterface) => personal.StudentID === student.StudentID);
-          const matchingAddress = addressRes.data.find((address: AddressInterface) => address.StudentID === student.StudentID);
-          const matchingFamily = familyRes.data.find((family: FamilyInterface) => family.StudentID === student.StudentID);
-          const matchingOther = otherRes.data.find((other: OtherInteface) => other.StudentID === student.StudentID);
-
-          
-          return {
-            ...student,             // ข้อมูลจาก Student เป็นหลัก
-            ...matchingPersonal,    // เพิ่มข้อมูล Personal ที่เชื่อมโยง
-            ...matchingAddress,      // เพิ่มข้อมูล Address ที่เชื่อมโยง
-            ...matchingFamily,       // เพิ่มข้อมูล Family ที่เชื่อมโยง
-            ...matchingOther
-          };
-        });
-  
-        setData(combinedData);
+      if (
+        studentRes.status === 200  ||
+        personalRes.status === 200 ||
+        addressRes.status === 200 ||
+        familyRes.status === 200 ||
+        otherRes.status === 200
+      ) {
+        // Combine data into a single object
+        const combinedData: CombinedData = {
+          ...studentRes.data,
+          ...personalRes.data,
+          ...addressRes.data,
+          ...familyRes.data,
+          ...otherRes.data,
+        };
+        setStudentData(combinedData);
       } else {
         messageApi.open({
           type: "error",
           content: "Error fetching data",
         });
+        setStudentData(null);
       }
     } catch (error) {
       messageApi.open({
         type: "error",
-        content: "Failed to fetch data",
+        content: "Failed to fetch student data.",
+      });
+      setStudentData(null);
+    }
+  };
+  useEffect(() => {
+    // Fetch student ID from localStorage
+    const studentId = localStorage.getItem("id");
+    if (studentId) {
+      getStudentData(studentId);
+    } else {
+      messageApi.open({
+        type: "error",
+        content: "Student ID not found.",
       });
     }
-  };  
-
-  useEffect(() => {
-    getData();
   }, []);
 
   const columns: ColumnsType<CombinedData> = [
@@ -186,8 +180,10 @@ function Personal() {
                   </tr>
                   <tr>
                     <td>สถานภาพครอบครัว</td>
-                    <td>{record.FamilyStatusID}</td>
+                   <td>{record?.FamilyStatusID.FamilyStatusID}</td> 
+                    {/* <td>{record.FamilyStatusID}</td> */}
                     <td>ผู้ปกครอง</td>
+                    {/*<td>{record?.guardian?.guardian}</td>*/}
                     <td>{record.GuardiansID}</td>
                   </tr>
                   <tr>
@@ -289,7 +285,7 @@ function Personal() {
         <Table
           //rowKey="ID"
           columns={columns}
-          dataSource={data}
+          dataSource={studentData ? [studentData] : []}
           style={{ width: "100%", overflow: "scroll" }}
           pagination={false}
         />

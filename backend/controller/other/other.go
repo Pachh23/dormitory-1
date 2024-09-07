@@ -21,3 +21,21 @@ func ListOther(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, other)
 }
+
+// GET /get-other/:id
+func GetOther(c *gin.Context) {
+	ID := c.Param("id")
+	var other entity.Other
+	//results := db.Preload("Gender").First(&student, ID)
+	db := config.DB()
+	results := db.Preload("License").First(&other, ID)
+	if results.Error != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": results.Error.Error()})
+		return
+	}
+	if other.ID == 0 {
+		c.JSON(http.StatusNoContent, gin.H{})
+		return
+	}
+	c.JSON(http.StatusOK, other)
+}
