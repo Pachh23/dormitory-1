@@ -18,6 +18,7 @@ import Statusgpages from "../../pages/status";
 import PersonalCreate from "../../pages/personal/create";
 const { Header, Content, Footer, Sider } = Layout;
 
+
 const FullLayout: React.FC = () => {
   const page = localStorage.getItem("page");
   const [messageApi, contextHolder] = message.useMessage();
