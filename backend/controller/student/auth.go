@@ -29,6 +29,11 @@ func SignInStudent(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	// ตรวจสอบหากไม่พบข้อมูล
+	if student.StudentID == "" {
+		c.JSON(http.StatusNotFound, gin.H{"error": "ไม่พบข้อมูลนักศึกษา"})
+		return
+	}
 	// ตรวจสอบรหัสผ่าน
 	err := bcrypt.CompareHashAndPassword([]byte(student.Password), []byte(payload.Password))
 	if err != nil {

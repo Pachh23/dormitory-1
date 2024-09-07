@@ -79,7 +79,7 @@ const AdminLayout: React.FC = () => {
               >
                 <Link to="/">
                   <HomeOutlined />
-                  <span>หน้าหลัก</span>
+                  <span>แจ้งข่าวสาร</span>
                 </Link>
               </Menu.Item>
               <Menu.Item

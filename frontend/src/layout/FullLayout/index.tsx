@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "../../App.css";
-//import { ApartmentOutlined, HomeOutlined,WalletOutlined,SolutionOutlined,TeamOutlined ,ToolOutlined,FormOutlined} from "@ant-design/icons";
+import { HistoryOutlined,ApartmentOutlined, HomeOutlined,WalletOutlined,SolutionOutlined,TeamOutlined ,ToolOutlined,FormOutlined} from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu, theme, Button, message } from "antd";
 import logo from "../../assets/logo.png";
 import Homepages from "../../pages/homepage";
@@ -84,7 +84,7 @@ const FullLayout: React.FC = () => {
                 onClick={() => setCurrentPage("homepage")}
               >
                 <Link to="/">
-                 {/*<HomeOutlined /> */}
+                 <HomeOutlined /> 
                   <span>หน้าหลัก</span>
                 </Link>
               </Menu.Item>
@@ -93,7 +93,7 @@ const FullLayout: React.FC = () => {
                 onClick={() => setCurrentPage("personal")}
               >
                 <Link to="/personal">
-                {/*}  <SolutionOutlined /> */}
+                  <SolutionOutlined /> 
                   <span>ข้อมูลส่วนตัว</span>
                 </Link>
               </Menu.Item>
@@ -102,7 +102,7 @@ const FullLayout: React.FC = () => {
                 onClick={() => setCurrentPage("dorm-booking")}
               >
                 <Link to="/dorm-booking">
-                {/*  <ApartmentOutlined /> */}
+                 <ApartmentOutlined /> 
                   <span>จองหอพัก</span>
                 </Link>
               </Menu.Item>
@@ -111,7 +111,7 @@ const FullLayout: React.FC = () => {
                 onClick={() => setCurrentPage("list")}
               >
                 <Link to="/list">
-                  {/*<TeamOutlined /> */}
+                  <TeamOutlined /> 
                   <span>รายชื่อผู้พัก</span>
                 </Link>
               </Menu.Item>
@@ -120,7 +120,7 @@ const FullLayout: React.FC = () => {
                 onClick={() => setCurrentPage("payment")}
               >
                 <Link to="/payment">
-                  {/*<WalletOutlined />*/}
+                  <WalletOutlined />
                   <span>แจ้งยอดชำระ</span>
                 </Link>
               </Menu.Item>
@@ -129,7 +129,7 @@ const FullLayout: React.FC = () => {
                 onClick={() => setCurrentPage("repair")}
               >
                 <Link to="/repair">
-                {/*  <ToolOutlined /> */}
+                 <ToolOutlined /> 
                   <span>แจ้งซ่อม</span>
                 </Link>
               </Menu.Item>
@@ -137,7 +137,7 @@ const FullLayout: React.FC = () => {
                 key="form"
                 title={
                   <span>
-                  {/*  <FormOutlined /> */}
+                   <FormOutlined /> 
                     <span>แบบฟอร์ม</span>
                   </span>
                 }
@@ -163,7 +163,7 @@ const FullLayout: React.FC = () => {
                 onClick={() => setCurrentPage("status")}
               >
                 <Link to="/status">
-                {/*  <ToolOutlined /> */}
+                <HistoryOutlined />
                   <span>ติดตามสถานะ</span>
                 </Link>
               </Menu.Item>

@@ -29,6 +29,11 @@ func SignInAdmin(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	// ตรวจสอบหากไม่พบข้อมูล
+	if admin.Username == "" {
+		c.JSON(http.StatusNotFound, gin.H{"error": "ไม่พบข้อมูลแอดมิน"})
+		return
+	}
 	// ตรวจสอบรหัสผ่าน
 	err := bcrypt.CompareHashAndPassword([]byte(admin.Password), []byte(payload.Password))
 	if err != nil {

@@ -65,17 +65,17 @@ func SetupDatabase() {
 	studentHashedPassword, _ := HashPassword("1234567890123")
 	Birthday, _ := time.Parse("2006-01-02", "1988-11-12")
 	User := &entity.Students{
-		FirstName: "Won",
-		LastName:  "Woo",
-		StudentID: "B6524449",
+		FirstName: "Nicha",
+		LastName:  "Wandee",
+		StudentID: "B6510001",
 		Password:  studentHashedPassword,
 		Birthday:  Birthday,
 		Year:      3,
-		Major:     "MED",
-		GenderID:  1,
+		Major:     "วิศวกรรมศาสตร์",
+		GenderID:  2,
 	}
 	db.FirstOrCreate(User, &entity.Students{
-		StudentID: "B6524449",
+		StudentID: "B6510001",
 	})
 
 	// Seed ข้อมูล admin

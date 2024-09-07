@@ -6,7 +6,7 @@ function Adminpages() {
     <div >
       <Row>
         <Col span={12}>
-          <h2 style={{color: '#1f1f1f'}}>หน้าหลัก</h2>
+          <h2 style={{color: '#1f1f1f'}}>แจ้งข่าวสาร</h2>
         </Col>
       </Row>
       <Divider />
