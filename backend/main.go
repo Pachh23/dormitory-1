@@ -11,6 +11,7 @@ import (
 	"dormitory.com/dormitory/controller/genders"
 	"dormitory.com/dormitory/controller/guardians"
 	"dormitory.com/dormitory/controller/license"
+	"dormitory.com/dormitory/controller/other"
 	"dormitory.com/dormitory/controller/personal"
 	personaldetails "dormitory.com/dormitory/controller/personalDetails"
 	"dormitory.com/dormitory/controller/student"
@@ -46,6 +47,7 @@ func main() {
 		router.GET("/list-personal", personal.ListPersonal)
 		router.GET("/list-address", address.ListAddress)
 		router.GET("/list-family", family.ListFamily)
+		router.GET("/list-other", other.ListOther)
 
 	}
 	r.GET("/genders", genders.GetAll)

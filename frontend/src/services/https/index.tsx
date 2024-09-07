@@ -97,6 +97,12 @@ async function ListFamily() {
     .then((res) => res)
     .catch((e) => e.response);
 }
+async function ListOther() {
+  return await axios
+    .get(`${apiUrl}/list-other`, requestOptions)
+    .then((res) => res)
+    .catch((e) => e.response);
+}
 
 export {
   SignInStudent,
@@ -112,4 +118,5 @@ export {
   GetPersonalById,
   ListAddress,
   ListFamily,
+  ListOther
 };

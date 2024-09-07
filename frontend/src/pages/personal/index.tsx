@@ -2,15 +2,16 @@ import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import type { ColumnsType } from "antd/es/table";
 import { useState, useEffect } from "react";
-import { ListStudents, ListPersonal,ListAddress, ListFamily } from "../../services/https/index";
+import { ListStudents, ListPersonal,ListAddress, ListFamily,ListOther } from "../../services/https/index";
 import { PersonalInterface } from "../../interfaces/Personal";
 import { StudentInterface } from "../../interfaces/Student";
 import { AddressInterface } from "../../interfaces/Address";
 import { FamilyInterface } from "../../interfaces/Family";
+import { OtherInteface } from "../../interfaces/Other";
 import { Space, Table, Button, Col, Row, Divider, message, Card } from "antd";
 import dayjs from "dayjs";
 
-interface CombinedData extends PersonalInterface, StudentInterface ,AddressInterface, FamilyInterface{} // Combining both interfaces
+interface CombinedData extends PersonalInterface, StudentInterface ,AddressInterface, FamilyInterface, OtherInteface{} // Combining both interfaces
 
 function Personal() {
   const navigate = useNavigate();
@@ -19,35 +20,43 @@ function Personal() {
   
   const getData = async () => {
     try {
-      const [personalRes, studentRes, addressRes, familyRes] = await Promise.all([
+      const [personalRes, studentRes, addressRes, familyRes, otherRes] = await Promise.all([
         ListPersonal(),
         ListStudents(),
         ListAddress(),
         ListFamily(),
+        ListOther()
       ]);
   
       if (personalRes.status === 200 
         && studentRes.status === 200 
         && addressRes.status === 200
         && familyRes.status === 200
+        && otherRes.status === 200
+
       ) 
       {
         console.log("Personal Response:", personalRes);
         console.log("Student Response:", studentRes);
         console.log("Address Response:", addressRes);
         console.log("Family Response:", familyRes);
+        console.log("Other Response:", otherRes);
+
   
         // ใช้ Student เป็นหลักในการเชื่อมโยงข้อมูล
         const combinedData = studentRes.data.map((student: StudentInterface) => {
           const matchingPersonal = personalRes.data.find((personal: PersonalInterface) => personal.StudentID === student.StudentID);
           const matchingAddress = addressRes.data.find((address: AddressInterface) => address.StudentID === student.StudentID);
           const matchingFamily = familyRes.data.find((family: FamilyInterface) => family.StudentID === student.StudentID);
+          const matchingOther = otherRes.data.find((other: OtherInteface) => other.StudentID === student.StudentID);
+
           
           return {
             ...student,             // ข้อมูลจาก Student เป็นหลัก
             ...matchingPersonal,    // เพิ่มข้อมูล Personal ที่เชื่อมโยง
             ...matchingAddress,      // เพิ่มข้อมูล Address ที่เชื่อมโยง
-            ...matchingFamily       // เพิ่มข้อมูล Family ที่เชื่อมโยง
+            ...matchingFamily,       // เพิ่มข้อมูล Family ที่เชื่อมโยง
+            ...matchingOther
           };
         });
   
