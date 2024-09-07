@@ -6,6 +6,7 @@ import (
 	"dormitory.com/dormitory/config"
 	"dormitory.com/dormitory/controller/address"
 	"dormitory.com/dormitory/controller/admin"
+	"dormitory.com/dormitory/controller/family"
 	familystatuses "dormitory.com/dormitory/controller/familyStatuses"
 	"dormitory.com/dormitory/controller/genders"
 	"dormitory.com/dormitory/controller/guardians"
@@ -44,7 +45,7 @@ func main() {
 		router.POST("/create-personal-detail", personaldetails.CreatePersonalDetails)
 		router.GET("/list-personal", personal.ListPersonal)
 		router.GET("/list-address", address.ListAddress)
-		//router.GET("/list-personal-detail", personaldetails.ListPersonalDetails)
+		router.GET("/list-family", family.ListFamily)
 
 	}
 	r.GET("/genders", genders.GetAll)

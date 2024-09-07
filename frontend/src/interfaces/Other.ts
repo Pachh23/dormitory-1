@@ -1,4 +1,4 @@
-export interface OtherInformationInteface{
+export interface OtherInteface{
   ID?: number;
   LatestGraduationFrom?: string;
   GraduatedYear?: number;

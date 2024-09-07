@@ -91,6 +91,13 @@ async function ListAddress() {
     .catch((e) => e.response);
 }
 
+async function ListFamily() {
+  return await axios
+    .get(`${apiUrl}/list-family`, requestOptions)
+    .then((res) => res)
+    .catch((e) => e.response);
+}
+
 export {
   SignInStudent,
   SignInAdmin,
@@ -103,6 +110,6 @@ export {
   ListPersonal,
   UpdatePersonalById,
   GetPersonalById,
-  ListAddress
-  
+  ListAddress,
+  ListFamily,
 };
