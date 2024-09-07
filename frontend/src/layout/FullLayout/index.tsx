@@ -1,12 +1,20 @@
-// Layout ของหอพักนักศึกษา กำหนด Routes
+// Layout ของหอพักนักศึกษา กำหนด Routes เส้นทางที่นี่
 import React, { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "../../App.css";
-import { UserOutlined, HomeOutlined } from "@ant-design/icons";
+//import { ApartmentOutlined, HomeOutlined,WalletOutlined,SolutionOutlined,TeamOutlined ,ToolOutlined,FormOutlined} from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu, theme, Button, message } from "antd";
 import logo from "../../assets/logo.png";
 import Homepages from "../../pages/homepage";
+import Paymentpages from "../../pages/payment";
+import DormBookingpages from "../../pages/dorm";
 import Personal from "../../pages/personal";
+import Listpages from "../../pages/list";
+import Repairpages from "../../pages/repair";
+import DelayedPaymentpages from "../../pages/form/DelayedPaymentForm";
+import EnExitingpages from "../../pages/form/EnExitingForm";
+import Resigningpages from "../../pages/form/ResigningForm";
+import Statusgpages from "../../pages/status";
 import PersonalCreate from "../../pages/personal/create";
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -75,7 +83,7 @@ const FullLayout: React.FC = () => {
                 onClick={() => setCurrentPage("homepage")}
               >
                 <Link to="/">
-                  <HomeOutlined />
+                 {/*<HomeOutlined /> */}
                   <span>หน้าหลัก</span>
                 </Link>
               </Menu.Item>
@@ -84,8 +92,78 @@ const FullLayout: React.FC = () => {
                 onClick={() => setCurrentPage("personal")}
               >
                 <Link to="/personal">
-                  <UserOutlined />
+                {/*}  <SolutionOutlined /> */}
                   <span>ข้อมูลส่วนตัว</span>
+                </Link>
+              </Menu.Item>
+              <Menu.Item
+                key="dorm-booking"
+                onClick={() => setCurrentPage("dorm-booking")}
+              >
+                <Link to="/dorm-booking">
+                {/*  <ApartmentOutlined /> */}
+                  <span>จองหอพัก</span>
+                </Link>
+              </Menu.Item>
+              <Menu.Item
+                key="list"
+                onClick={() => setCurrentPage("list")}
+              >
+                <Link to="/list">
+                  {/*<TeamOutlined /> */}
+                  <span>รายชื่อผู้พัก</span>
+                </Link>
+              </Menu.Item>
+              <Menu.Item
+                key="payment"
+                onClick={() => setCurrentPage("payment")}
+              >
+                <Link to="/payment">
+                  {/*<WalletOutlined />*/}
+                  <span>แจ้งยอดชำระ</span>
+                </Link>
+              </Menu.Item>
+              <Menu.Item
+                key="repair"
+                onClick={() => setCurrentPage("repair")}
+              >
+                <Link to="/repair">
+                {/*  <ToolOutlined /> */}
+                  <span>แจ้งซ่อม</span>
+                </Link>
+              </Menu.Item>
+              <Menu.SubMenu
+                key="form"
+                title={
+                  <span>
+                  {/*  <FormOutlined /> */}
+                    <span>แบบฟอร์ม</span>
+                  </span>
+                }
+              >
+                <Menu.Item key="DelayedPayment">
+                  <Link to="/form/DelayedPayment">
+                    <span>ฟอร์มผ่อนผัน</span>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="EnExiting">
+                  <Link to="/form/EnExiting">
+                    <span>ฟอร์มขออนุญาตเข้า-ออก</span>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="Resigning">
+                  <Link to="/form/Resigning">
+                    <span>ฟอร์มลาออก</span>
+                  </Link>
+                </Menu.Item>
+              </Menu.SubMenu>
+              <Menu.Item
+                key="status"
+                onClick={() => setCurrentPage("status")}
+              >
+                <Link to="/status">
+                {/*  <ToolOutlined /> */}
+                  <span>ติดตามสถานะ</span>
                 </Link>
               </Menu.Item>
             </Menu>
@@ -110,6 +188,16 @@ const FullLayout: React.FC = () => {
               <Route path="/" element={<Homepages />} />
               <Route path="/personal" element={<Personal />} />
               <Route path="/personal/create" element={<PersonalCreate />} />
+              <Route path="/payment" element={<Paymentpages />} />
+              <Route path="/dorm-booking" element={<DormBookingpages />} />
+              <Route path="/list" element={<Listpages />} />
+              <Route path="/repair" element={<Repairpages />} />
+              <Route path="/form/DelayedPayment" element={<DelayedPaymentpages />} />
+              <Route path="/form/EnExiting" element={<EnExitingpages />} />
+              <Route path="/form/Resigning" element={<Resigningpages />} />
+              <Route path="/status" element={<Statusgpages />} />
+
+
             </Routes>
           </div>
         </Content>
