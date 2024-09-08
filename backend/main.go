@@ -43,7 +43,7 @@ func main() {
 		// CreatePersonalDetails Route
 		router.POST("/create-personal-detail", personaldetails.CreatePersonalDetails)
 		// Personal Route
-		router.POST("/create-personal", personal.CreatePersonal)
+		//router.POST("/create-personal", personal.CreatePersonal)
 		router.GET("/get-personal/:id", personal.GetPersonal)
 		router.PUT("/update-personal/:id", personal.UpdatePersonal)
 		router.GET("/list-personal", personal.ListPersonal)
