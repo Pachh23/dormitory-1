@@ -94,21 +94,21 @@ function Personal() {
                 <tbody>
                   <tr>
                     <td style={{ backgroundColor: "#f0f0f0" }}>ชื่อเล่น</td>
-                    <td>{record.Nickname}</td>
+                    <td>{record.student_id}</td>
                     <td style={{ backgroundColor: "#f0f0f0" }}>วันเกิด</td>
                     <td>{dayjs(record.birthday).format("dddd DD MMM YYYY")}</td>
                   </tr>
                   <tr>
                     <td>รหัสบัตรประชาชน</td>
-                    <td>{record.CitizenID}</td>
+                    <td>{record.citizen_id}</td>
                     <td>หมายเลขโทรศัพท์มือถือ</td>
-                    <td>{record.Phone}</td>
+                    <td>{record.phone}</td>
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: "#f0f0f0" }}>สัญชาติ</td>
-                    <td>{record.Nationality}</td>
+                    <td>{record.nationality}</td>
                     <td style={{ backgroundColor: "#f0f0f0" }}>เชื้อชาติ</td>
-                    <td>{record.Race}</td>
+                    <td>{record.race}</td>
                   </tr>
                   <tr>
                     <td>ศาสนา</td>
@@ -180,11 +180,10 @@ function Personal() {
                   </tr>
                   <tr>
                     <td>สถานภาพครอบครัว</td>
-                   <td>{record?.FamilyStatusID.FamilyStatusID}</td> 
-                    {/* <td>{record.FamilyStatusID}</td> */}
+                    <td>{record.family_status_id}</td> 
                     <td>ผู้ปกครอง</td>
                     {/*<td>{record?.guardian?.guardian}</td>*/}
-                    <td>{record.GuardiansID}</td>
+                    <td>{record.guardian_id}</td>
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: '#f0f0f0' }}>หรือผู้ปกครอง ชื่อ/สกุล</td>

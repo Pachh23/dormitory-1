@@ -10,7 +10,7 @@ export interface FamilyInterface{
   Relationship?: string;
   OccupationGuardian?: string;
   PhoneGuardian?: string;
-  GuardiansID?: number;
-  FamilyStatusID?: number;
+  guardian_id?: number;
+  family_status_id?: number;
   StudentID?: string; // เชื่อมโยงกับ Student
 }
