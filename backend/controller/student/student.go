@@ -110,7 +110,9 @@ func UpdateStudent(c *gin.Context) {
 	var student entity.Students
 	StudentID := c.Param("id")
 	db := config.DB()
+
 	result := db.First(&student, StudentID)
+	
 	if result.Error != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "id not found"})
 		return

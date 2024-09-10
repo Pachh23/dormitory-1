@@ -47,6 +47,7 @@ function StudentEdit() {
       }, 2000);
     }
   };
+  
   const onFinish = async (values: StudentInterface) => {
     let payload = {
       ...values,

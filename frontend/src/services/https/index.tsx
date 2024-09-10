@@ -1,4 +1,7 @@
 import { StudentInterface } from "../../interfaces/Student";
+import { AddressInterface } from "../../interfaces/Address";
+import { OtherInteface } from "../../interfaces/Other";
+import { FamilyInterface } from "../../interfaces/Family";
 import { SignInStudentInterface } from "../../interfaces/SignInStudent";
 import { SignInAdminInterface } from "../../interfaces/SignInAdmin";
 import { PersonalInterface } from "../../interfaces/Personal";
@@ -123,6 +126,37 @@ async function GetOtherById(id: string) {
     .then((res) => res)
     .catch((e) => e.response);
 }
+// เรียกใช้ API หลายตัวพร้อมกัน
+async function GetPersonalDetails(id: string) {
+  return await axios
+  .get(`${apiUrl}/get-detail/${id}`, requestOptions)
+  .then((res) => res)
+  .catch((e) => e.response);
+}
+async function PersonalEdit(id: string, updatedData: any) {
+  return await axios
+    .put(`${apiUrl}/edit-personal/${id}`, updatedData, requestOptions)
+    .then((res) => res)
+    .catch((e) => e.response);
+}
+async function UpdateAddressById(id: string, data: AddressInterface) {
+  return await axios
+    .put(`${apiUrl}/update-address/${id}`, data, requestOptions)
+    .then((res) => res)
+    .catch((e) => e.response);
+}
+async function UpdateOtherById(id: string, data: OtherInteface) {
+  return await axios
+    .put(`${apiUrl}/update-other/${id}`, data, requestOptions)
+    .then((res) => res)
+    .catch((e) => e.response);
+}
+async function UpdateFamilyById(id: string, data: FamilyInterface) {
+  return await axios
+    .put(`${apiUrl}/update-family/${id}`, data, requestOptions)
+    .then((res) => res)
+    .catch((e) => e.response);
+}
 
 export {
   SignInStudent,
@@ -141,5 +175,10 @@ export {
   ListOther,
   GetAddressById,
   GetFamilyById,
-  GetOtherById
+  GetOtherById,
+  GetPersonalDetails,
+  PersonalEdit,
+  UpdateAddressById,
+  UpdateOtherById,
+  UpdateFamilyById
 };

@@ -34,7 +34,12 @@ function SignInStudentPages() {
          <Row align="middle" justify="center" style={{ height: "auto" }}>
             <Col xs={24} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginBottom: '0px' }}>
               <img alt="logo" style={{ width: "80%", maxWidth: 250 ,marginTop: '-20px' }} src={logo} className="images-logo" />
-              <p style={{ marginTop: '10px', fontSize: '30px', color: '#003366'}}>Dormitory</p>
+              <p style={{   marginTop: '10px', 
+                            fontSize: '30px', 
+                            color: '#000001', 
+                            fontWeight: 600, // หรือใช้ค่าที่คุณต้องการ', // เพิ่มความหนาให้ตัวอักษร
+                            //textShadow: '1px 1px 3px rgba(0, 0, 0, 0.8)'
+                            }}>Dormitory</p>
             </Col>
             <Col xs={24}>
               <Form style={{ marginTop: '-15px'}} name="basic" onFinish={onFinish} autoComplete="off" layout="vertical">

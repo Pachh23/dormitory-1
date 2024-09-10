@@ -2,7 +2,7 @@ import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import type { ColumnsType } from "antd/es/table";
 import { useState, useEffect } from "react";
-import { GetAddressById ,GetStudentsById,GetPersonalById,GetOtherById,GetFamilyById} from "../../services/https/index";
+import { GetAddressById ,GetStudentsById,GetPersonalById,GetOtherById,GetFamilyById,GetPersonalDetails} from "../../services/https/index";
 import { PersonalInterface } from "../../interfaces/Personal";
 import { StudentInterface } from "../../interfaces/Student";
 import { AddressInterface } from "../../interfaces/Address";
@@ -21,7 +21,8 @@ function Personal() {
   const getStudentData = async (id: string) => {
     try {
       // Fetch all related data by student ID
-      const [studentRes,personalRes,addressRes,familyRes,otherRes ] = await Promise.all([
+      const [studentRes ,personalRes,addressRes,familyRes,otherRes ] = await Promise.all([
+        //GetPersonalDetails(id)
         GetStudentsById(id),
         GetPersonalById(id),
         GetAddressById(id),
@@ -94,31 +95,31 @@ function Personal() {
                 <tbody>
                   <tr>
                     <td style={{ backgroundColor: "#f0f0f0" }}>ชื่อเล่น</td>
-                    <td>{record.student_id}</td>
+                    <td>{record.nickname || ""}</td>
                     <td style={{ backgroundColor: "#f0f0f0" }}>วันเกิด</td>
-                    <td>{dayjs(record.birthday).format("dddd DD MMM YYYY")}</td>
+                    <td>{dayjs(record.birthday || "").format("dddd DD MMM YYYY")}</td>
                   </tr>
                   <tr>
                     <td>รหัสบัตรประชาชน</td>
-                    <td>{record.citizen_id}</td>
+                    <td>{record.citizen_id || ""}</td>
                     <td>หมายเลขโทรศัพท์มือถือ</td>
-                    <td>{record.phone}</td>
+                    <td>{record.phone || ""}</td>
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: "#f0f0f0" }}>สัญชาติ</td>
-                    <td>{record.nationality}</td>
+                    <td>{record.nationality || ""}</td>
                     <td style={{ backgroundColor: "#f0f0f0" }}>เชื้อชาติ</td>
-                    <td>{record.race}</td>
+                    <td>{record.race || ""}</td>
                   </tr>
                   <tr>
                     <td>ศาสนา</td>
-                    <td>{record.Religion}</td>
+                    <td>{record.Religion || ""}</td>
                     <td>กรุ๊ปเลือด</td>
-                    <td>{record.BloodGroup}</td>
+                    <td>{record.BloodGroup || ""}</td>
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: "#f0f0f0" }}>โรคประจำตัว (ถ้ามี)</td>
-                    <td colSpan={3}>{record.UD}</td>
+                    <td colSpan={3}>{record.UD || ""}</td>
                   </tr>
                 </tbody>
               </table>
@@ -128,31 +129,31 @@ function Personal() {
                 <tbody>
                   <tr>
                   <td style={{ backgroundColor: '#f0f0f0' }}>บ้านเลขที่</td>
-                    <td>{record.HouseNo}</td>
+                    <td>{record.HouseNo || ""}</td>
                     <td style={{ backgroundColor: '#f0f0f0' }}>หมู่ที่</td>
-                    <td>{record.VillageNo}</td>
+                    <td>{record.VillageNo || ""}</td>
                   </tr>
                   <tr>
                     <td>ชื่อหมู่บ้าน</td>
-                    <td>{record.Village}</td>
+                    <td>{record.Village|| ""}</td>
                     <td>ซอย</td>
-                    <td>{record.Alley}</td>
+                    <td>{record.Alley|| ""}</td>
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: '#f0f0f0' }}>ถนน</td>
-                    <td>{record.Road}</td>
+                    <td>{record.Road || ""}</td>
                     <td style={{ backgroundColor: '#f0f0f0' }}>ตำบล/แขวง</td>
-                    <td>{record.SubDistrict}</td>
+                    <td>{record.SubDistrict || ""}</td>
                   </tr>
                   <tr>
                     <td>อำเภอ/เขต</td>
-                    <td>{record.District}</td>
+                    <td>{record.District || ""}</td>
                     <td>จังหวัด</td>
-                    <td>{record.Province}</td>
+                    <td>{record.Province || ""}</td>
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: '#f0f0f0' }}>รหัสไปรษณีย์</td>
-                    <td colSpan={3}>{record.PostCode}</td>
+                    <td colSpan={3}>{record.PostCode || ""}</td>
                   </tr>
                 </tbody>
               </table>
@@ -162,40 +163,40 @@ function Personal() {
                 <tbody>
                   <tr>
                   <td style={{ backgroundColor: '#f0f0f0' }}>ชื่อ - สกุลบิดา</td>
-                    <td>{record.FathersName}</td>
+                    <td>{record.FathersName || ""}</td>
                     <td style={{ backgroundColor: '#f0f0f0' }}>ชื่อ - สกุลมารดา</td>
-                    <td>{record.MathersName}</td>
+                    <td>{record.MathersName || ""}</td>
                   </tr>
                   <tr>
                     <td>อาชีพบิดา</td>
-                    <td>{record.OccupationFather}</td>
+                    <td>{record.OccupationFather || ""}</td>
                     <td>อาชีพมารดา</td>
-                    <td>{record.OccupationMather}</td>
+                    <td>{record.OccupationMather || ""}</td>
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: '#f0f0f0' }}>หมายเลขโทรศัพท์มือถือบิดา</td>
-                    <td>{record.PhoneFather}</td>
+                    <td>{record.PhoneFather || ""}</td>
                     <td style={{ backgroundColor: '#f0f0f0' }}>หมายเลขโทรศัพท์มือถือมารดา</td>
-                    <td>{record.PhoneMather}</td>
+                    <td>{record.PhoneMather || ""}</td>
                   </tr>
                   <tr>
                     <td>สถานภาพครอบครัว</td>
-                    <td>{record.family_status_id}</td> 
+                    <td>{record.family_status_id || ""}</td> 
                     <td>ผู้ปกครอง</td>
                     {/*<td>{record?.guardian?.guardian}</td>*/}
-                    <td>{record.guardian_id}</td>
+                    <td>{record.guardian_id || ""}</td>
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: '#f0f0f0' }}>หรือผู้ปกครอง ชื่อ/สกุล</td>
-                    <td>{record.OrGuardiansName}</td>
+                    <td>{record.OrGuardiansName || ""}</td>
                     <td style={{ backgroundColor: '#f0f0f0' }}>เกี่ยวข้องเป็น</td>
-                    <td>{record.Relationship}</td>
+                    <td>{record.Relationship || ""}</td>
                   </tr>
                   <tr>
                     <td>อาชีพ</td>
-                    <td>{record.OccupationGuardian}</td>
+                    <td>{record.OccupationGuardian || ""}</td>
                     <td>หมายเลขโทรศัพท์มือถือ</td>
-                    <td>{record.PhoneGuardian}</td>
+                    <td>{record.PhoneGuardian || ""}</td>
                   </tr>
                 </tbody>
               </table>
@@ -205,37 +206,37 @@ function Personal() {
                 <tbody>
                   <tr>
                     <td style={{ backgroundColor: '#f0f0f0' }}>สำเร็จการศึกษาขั้นสุดท้ายจาก</td>
-                    <td colSpan={3}>{record.LatestGraduationFrom}</td>
+                    <td colSpan={3}>{record.LatestGraduationFrom || ""}</td>
                   </tr>
                   <tr>
                     <td>เมื่อปี พ.ศ.</td>
-                    <td>{record.GraduatedYear}</td>
+                    <td>{record.GraduatedYear || ""}</td>
                     <td>GPAX</td>
-                    <td>{record.Gpax}</td>
+                    <td>{record.Gpax || ""}</td>
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: '#f0f0f0' }}>พาหนะส่วนตัวที่ใช้</td>
-                    <td>{record.PersonalVehicles}</td>
+                    <td>{record.PersonalVehicles || ""}</td>
                     <td style={{ backgroundColor: '#f0f0f0' }}>สี</td>
-                    <td>{record.Color}</td>
+                    <td>{record.Color || ""}</td>
                   </tr>
                   <tr>
                     <td>หมายเลขทะเบียน</td>
-                    <td>{record.PlateNo}</td>
+                    <td>{record.PlateNo || ""}</td>
                     <td>วันครบกำหนดเสียภาษี</td>
-                    <td>{record.TaxDate}</td>
+                    <td>{record.TaxDate || ""}</td>
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: '#f0f0f0' }}>จังหวัด</td>
-                    <td>{record.ProvinceVehicle}</td>
+                    <td>{record.ProvinceVehicle || ""}</td>
                     <td style={{ backgroundColor: '#f0f0f0' }}>ใบขับขี่</td>
-                    <td>{record.LicenseID}</td>
+                    <td>{record.LicenseID || ""}</td>
                   </tr>
                   <tr>
                     <td>ประเภท (ถ้ามี)</td>
-                    <td>{record.Type}</td>
+                    <td>{record.Type || ""}</td>
                     <td>วันบัตรหมดอายุ</td>
-                    <td>{record.ExpiredCard}</td>
+                    <td>{record.ExpiredCard || ""}</td>
                   </tr>
                 </tbody>
               </table>

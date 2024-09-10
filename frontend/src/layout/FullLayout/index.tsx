@@ -16,6 +16,7 @@ import EnExitingpages from "../../pages/form/EnExitingForm";
 import Resigningpages from "../../pages/form/ResigningForm";
 import Statusgpages from "../../pages/status";
 import PersonalCreate from "../../pages/personal/create";
+import PersonalEdit from "../../pages/personal/edit";
 const { Header, Content, Footer, Sider } = Layout;
 
 
@@ -189,6 +190,7 @@ const FullLayout: React.FC = () => {
               <Route path="/" element={<Homepages />} />
               <Route path="/personal" element={<Personal />} />
               <Route path="/personal/create" element={<PersonalCreate />} />
+              <Route path="/personal/edit/:id" element={<PersonalEdit />} />
               <Route path="/payment" element={<Paymentpages />} />
               <Route path="/dorm-booking" element={<DormBookingpages />} />
               <Route path="/list" element={<Listpages />} />

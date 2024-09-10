@@ -42,6 +42,8 @@ func main() {
 		router.DELETE("/delete-student/:id", student.DeleteStudent)
 		// CreatePersonalDetails Route
 		router.POST("/create-personal-detail", personaldetails.CreatePersonalDetails)
+		router.GET("/get-detail/:id", personaldetails.GetPersonalDetails)
+
 		// Personal Route
 		//router.POST("/create-personal", personal.CreatePersonal)
 		router.GET("/get-personal/:id", personal.GetPersonal)
@@ -57,6 +59,7 @@ func main() {
 		// Other Route
 		router.GET("/list-other", other.ListOther)
 		router.GET("/get-other/:id", other.GetOther)
+		router.PUT("/update-other/:id", other.UpdateOther)
 
 	}
 	r.GET("/genders", genders.GetAll)
