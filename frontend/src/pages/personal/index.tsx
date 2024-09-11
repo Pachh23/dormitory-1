@@ -211,9 +211,9 @@ function Personal() {
                   </tr>
                   <tr>
                     <td>เมื่อปี พ.ศ.</td>
-                    <td>{record.graduated_year}</td>
+                    <td>{record.graduated_year || ""}</td>
                     <td>GPAX</td>
-                    <td>{record.gpax.toFixed(2)}</td>
+                    <td>{record.gpax ? record.gpax.toFixed(2) : ""}</td>
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: '#f0f0f0' }}>พาหนะส่วนตัวที่ใช้</td>
@@ -225,7 +225,8 @@ function Personal() {
                     <td>หมายเลขทะเบียน</td>
                     <td>{record.plate_no}</td>
                     <td>วันครบกำหนดเสียภาษี</td>
-                    <td>{dayjs(record.tax_date).format("dddd DD MMM YYYY")}</td>
+                    <td>{record.tax_date ? dayjs(record.tax_date).format("dddd DD MMM YYYY") : ""}</td>
+                  {/*  <td>{dayjs(record.tax_date || "-").format("dddd DD MMM YYYY")}</td>*/}
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: '#f0f0f0' }}>จังหวัด</td>
@@ -237,7 +238,7 @@ function Personal() {
                     <td>ประเภท (ถ้ามี)</td>
                     <td>{record.type}</td>
                     <td>วันบัตรหมดอายุ</td>
-                    <td>{dayjs(record.expired_card).format("dddd DD MMM YYYY")}</td>
+                    <td>{record.expired_card ? dayjs(record.expired_card).format("dddd DD MMM YYYY") : ""}</td>
                   </tr>
                 </tbody>
               </table>
