@@ -31,7 +31,7 @@ func SetupDatabase() {
 		&entity.Genders{},
 		&entity.FamilyStatuses{},
 		&entity.Guardians{},
-		&entity.License{},
+		&entity.Licenses{},
 		&entity.Address{},
 		&entity.Family{},
 		&entity.Other{},
@@ -56,10 +56,10 @@ func SetupDatabase() {
 	db.FirstOrCreate(&GuardianFather, &entity.Guardians{Guardian: "บิดา"})
 	db.FirstOrCreate(&GuardianOther, &entity.Guardians{Guardian: "อื่นๆ (ระบุ)"})
 
-	hasLicense := entity.License{License: "มี"}
-	noLicense := entity.License{License: "ไม่มี"}
-	db.FirstOrCreate(&hasLicense, &entity.License{License: "มี"})
-	db.FirstOrCreate(&noLicense, &entity.License{License: "ไม่มี"})
+	hasLicense := entity.Licenses{License: "มี"}
+	noLicense := entity.Licenses{License: "ไม่มี"}
+	db.FirstOrCreate(&hasLicense, &entity.Licenses{License: "มี"})
+	db.FirstOrCreate(&noLicense, &entity.Licenses{License: "ไม่มี"})
 
 	// Seed ข้อมูล student
 	studentHashedPassword, _ := HashPassword("1234567890123")

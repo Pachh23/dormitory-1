@@ -1,15 +1,15 @@
 export interface OtherInteface{
   ID?: number;
-  LatestGraduationFrom?: string;
-  GraduatedYear?: number;
-  Gpax?: number;
-  PersonalVehicles?: string;
-  Color?: string;
-  PlateNo?: string;
-  TaxDate?: string;
-  ProvinceVehicle?: string;
-  LicenseID?: number; 
-  Type?: string;
-  ExpiredCard?: string;
+  latest_graduation_from?: string;
+  graduated_year?: number;
+  gpax?: number;
+  personal_vehicles?: string;
+  color?: string;
+  plate_no?: string;
+  tax_date?: string;
+  province_vehicle?: string;
+  licenses_id?: number; 
+  type?: string;
+  expired_card?: string;
   StudentID?: string; // เชื่อมโยงกับ Student
 }

@@ -46,8 +46,7 @@ func GetOther(c *gin.Context) {
 			ProvinceVehicle:      nil,
 			Type:                 nil,
 			ExpiredCard:          nil,
-			LicenseID:            nil,
-			License:              nil,
+			LicensesID:            nil,
 			// กำหนดฟิลด์อื่น ๆ ตามโครงสร้างของ entity.Other
 		}
 		// คืนฟิลด์ว่างกลับไปพร้อมสถานะ 200
@@ -68,7 +67,7 @@ func UpdateOther(c *gin.Context) {
 	// Check if the personal information exists
 	result := db.First(&other, "id = ?", OtherID)
 	if result.Error != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Personal ID not found"})
+		c.JSON(http.StatusNotFound, gin.H{"error": "Other ID not found"})
 		return
 	}
 

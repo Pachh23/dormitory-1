@@ -1,13 +1,13 @@
 export interface AddressInterface{
   ID?: number;
-  HouseNo?:  string;    
-	VillageNo?: string;    
-	Village?:  string;   
-	Alley?:     string;    
-	Road?:  string; 
-	SubDistrict?:  string;   
-	District?: string;
-	Province?: string;
-	PostCode?: string;
+  house_no?:  string;    
+	village_no?: string;    
+	village?:  string;   
+	alley?:     string;    
+	road?:  string; 
+	sub_district?:  string;   
+	district?: string;
+	province?: string;
+	post_code?: string;
   StudentID?: string; // เชื่อมโยงกับ Student
 }

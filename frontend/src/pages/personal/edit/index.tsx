@@ -9,7 +9,8 @@ import { FamilyInterface } from "../../../interfaces/Family";
 import { OtherInteface } from "../../../interfaces/Other";
 import { GetAddressById,
 	GetFamilyById,GetOtherById,GetPersonalById,
-	UpdateAddressById,UpdateFamilyById,UpdateOtherById,UpdatePersonalById } from "../../../services/https";
+	UpdateAddressById,UpdateFamilyById,UpdateOtherById,UpdatePersonalById } from "../../../services/https/index";
+import dayjs from "dayjs";
 
 interface CombinedData extends PersonalInterface ,AddressInterface, FamilyInterface, OtherInteface{} // Combining both interfaces
 
@@ -18,6 +19,7 @@ function PersonalEdit() {
 	const [messageApi, contextHolder] = message.useMessage();
   const { id } = useParams<{ id: any }>();
   const [form] = Form.useForm();
+
 	const getStudentData = async (id: string) => {
 		try {
 			// เรียก API หลายตัวพร้อมกัน
@@ -27,14 +29,19 @@ function PersonalEdit() {
 				GetFamilyById(id),
 				GetOtherById(id)
 			]);
-
+			// ตรวจสอบข้อมูลที่ได้รับ
+			console.log("Personal Response:", personalRes.data);
+			console.log("Address Response:", addressRes.data);
+			console.log("Family Response:", familyRes.data);
+			console.log("Other Response:", otherRes.data);
 			// ตรวจสอบสถานะการตอบกลับของ API
 			if (
-				personalRes.status === 200 &&
-				addressRes.status === 200 &&
-				familyRes.status === 200 &&
+				personalRes.status === 200 ||
+				addressRes.status === 200 ||
+				familyRes.status === 200 ||
 				otherRes.status === 200
-			) {
+			) 
+			{
 				// ตั้งค่าให้ฟอร์มเมื่อดึงข้อมูลสำเร็จ
 				form.setFieldsValue({
 					
@@ -44,29 +51,53 @@ function PersonalEdit() {
 					phone: personalRes.data.phone,
 					nationality: personalRes.data.nationality,
 					race: personalRes.data.race,
-					Religion: personalRes.data.Religion,
-					BloodGroup: personalRes.data.BloodGroup,
-					UD: personalRes.data.UD,
-
+					religion: personalRes.data.religion,
+					blood_group: personalRes.data.blood_group,
+					ud: personalRes.data.ud,
+					
 					// ข้อมูลจาก Address
-					address: addressRes.data.address,
-					subdistrict: addressRes.data.subdistrict,
+					house_no: addressRes.data.house_no,
+					village_no: addressRes.data.village_no,
+					village: addressRes.data.village,
+					alley: addressRes.data.alley,
+					road: addressRes.data.road,
+					sub_district: addressRes.data.sub_district,
 					district: addressRes.data.district,
 					province: addressRes.data.province,
-	
+					post_code: addressRes.post_code,
+					
 					// ข้อมูลจาก Family
-					father_name: familyRes.data.father_name,
-					mother_name: familyRes.data.mother_name,
-	
+					fathers_name: familyRes.data.fathers_name,
+					mathers_name: familyRes.data.mathers_name,
+					occupation_father: familyRes.data.occupation_father,
+					occupation_mather: familyRes.data.occupation_mather,
+					phone_father: familyRes.data.phone_father,
+					phone_mather: familyRes.data.phone_mather,
+					family_status_id: familyRes.data.family_status_id?.ID,
+					guardian_id: familyRes.data.guardian_id?.ID,
+					or_guardians_name: familyRes.data.or_guardians_name,
+					relationship: familyRes.data.relationship,
+					occupation_guardian: familyRes.data.occupation_guardian,
+					phone_guardian: familyRes.data.phone_guardian,
+					
 					// ข้อมูลจาก Other
+					latest_graduation_from: otherRes.data.latest_graduation_from,
+					graduated_year: otherRes.data.graduated_year,
 					gpax: otherRes.data.gpax,
-					vehicles: otherRes.data.personalVehicles,
+					personal_vehicles: otherRes.data.personal_vehicles,
+					color: otherRes.data.color,
+					plate_no: otherRes.data.plate_no,
+					tax_date: dayjs(otherRes.data.tax_date),
+					province_vehicle: otherRes.data.province_vehicle,
+					licenses_id: otherRes.data.licenses_id?.ID,
+					type: otherRes.data.type,
+					expired_card: dayjs(otherRes.data.expired_card),
 				});
 			} else {
 				// ถ้าไม่ได้รับข้อมูลจาก API
 				messageApi.open({
 					type: "error",
-					content: "ไม่พบข้อมูลผู้ใช้",
+					content: "กรุณากรอกข้อมูล",
 				});
 				setTimeout(() => {
 					navigate("/personal");
@@ -81,63 +112,63 @@ function PersonalEdit() {
 		}
 	};
 	const onFinish = async (values: CombinedData) => {
-	
+		
 		let personalPayload = {
 			nickname: values.nickname,
 			citizen_id: values.citizen_id,
 			phone: values.phone,
 			nationality: values.nationality,
 			race: values.race,
-			Religion: values.Religion,
-			BloodGroup: values.BloodGroup,
-			UD: values.UD,
-	// ข้อมูลของ Personal ที่ต้องการอัปเดต
+			religion: values.religion,
+			blood_group: values.blood_group,
+			ud: values.ud,
+			// ข้อมูลของ Personal ที่ต้องการอัปเดต
 		};
-	
+		
 		let addressPayload = {
-			HouseNo: values.HouseNo,
-				VillageNo: values.VillageNo,
-				Village: values.Village,
-				Alley: values.Alley,
-				Road: values.Road,
-				SubDistrict: values.SubDistrict,
-				District: values.District,
-				Province: values.Province,
-				PostCode: values.PostCode,
+			house_no: values.house_no,
+			village_no: values.village_no,
+			village: values.village,
+			alley: values.alley,
+			road: values.road,
+			sub_district: values.sub_district,
+			district: values.district,
+			province: values.province,
+			post_code: values.post_code,
 			// ข้อมูลของ Address ที่ต้องการอัปเดต
 		};
-	
+		
 		let familyPayload = {
-			FathersName: values.FathersName,
-				MathersName: values.MathersName,
-				OccupationFather: values.OccupationFather,
-				OccupationMather: values.OccupationMather,
-				PhoneFather: values.PhoneFather,
-				PhoneMather: values.PhoneMather,
-				family_status_id: values.family_status_id,
-				guardian_id: values.guardian_id,
-				OrGuardiansName: values.OrGuardiansName,
-				Relationship: values.Relationship,
-				OccupationGuardian: values.OccupationGuardian,
-				PhoneGuardian: values.PhoneGuardian,
+			fathers_name: values.fathers_name,
+			mathers_name: values.mathers_name,
+			occupation_father: values.occupation_father,
+			occupation_mather: values.occupation_mather,
+			phone_father: values.phone_father,
+			phone_mather: values.phone_mather,
+			family_status_id: values.family_status_id,
+			guardians_id: values.guardians_id,
+			or_guardians_name: values.or_guardians_name,
+			relationship: values.relationship,
+			occupation_guardian: values.occupation_guardian,
+			phone_guardian: values.phone_guardian,
 			// ข้อมูลของ Family ที่ต้องการอัปเดต
 		};
-	
+		
 		let otherPayload = {
-			LatestGraduationFrom: values.LatestGraduationFrom,
-				GraduatedYear: values.GraduatedYear,
-				Gpax: values.Gpax,
-				PersonalVehicles: values.PersonalVehicles,
-				Color: values.Color,
-				PlateNo: values.PlateNo,
-				TaxDate: values.TaxDate,
-				ProvinceVehicle: values.ProvinceVehicle,
-				LicenseID: values.LicenseID,
-				Type: values.Type,
-				ExpiredCard: values.ExpiredCard,
+			latest_graduation_from: values.latest_graduation_from,
+			graduated_year: values.graduated_year,
+			gpax: values.gpax,
+			personal_vehicles: values.personal_vehicles,
+			color: values.color,
+			plate_no: values.plate_no,
+			tax_date: values.tax_date,
+			province_vehicle: values.province_vehicle,
+			licenses_id: values.licenses_id,
+			type: values.type,
+			expired_card: values.expired_card,
 			// ข้อมูลของ Other ที่ต้องการอัปเดต
 		};
-	
+		
 		try {
 			const [personalRes, addressRes, familyRes, otherRes] = await Promise.all([
 				UpdatePersonalById(id, personalPayload),
@@ -145,12 +176,12 @@ function PersonalEdit() {
 				UpdateFamilyById(id, familyPayload),
 				UpdateOtherById(id, otherPayload)
 			]);
-	
+			
 			// ตรวจสอบว่าทุก API ตอบกลับสถานะสำเร็จ (200)
 			if (
-				personalRes.status === 200 &&
-				addressRes.status === 200 &&
-				familyRes.status === 200 &&
+				personalRes.status === 200 ||
+				addressRes.status === 200 ||
+				familyRes.status === 200 ||
 				otherRes.status === 200
 			) {
 				messageApi.open({
@@ -175,19 +206,23 @@ function PersonalEdit() {
 		}
 	};
 	
+	
 	useEffect(() => {
 		getStudentData(id);
 	}, [id]);
+	
 	
 
 	return (
 	<div>
 		{contextHolder}
 			<h2 style={{color: '#1f1f1f'}}>เปลี่ยนแปลงข้อมูลส่วนตัว</h2>
+			<Divider />
 			<Card>
 				<Form 
 					labelCol={{ span: 10 }}
 					name="basic"
+          form={form}
 					layout="horizontal"
 					onFinish={onFinish}
 					autoComplete="off"
@@ -246,7 +281,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="ศาสนา"
-									name="Religion"
+									name="religion"
 									rules={[{ required: true, message: "กรุณากรอกศาสนา" }]}
 								>
 									<Input />
@@ -255,7 +290,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="กลุ่มเลือด"
-									name="BloodGroup"
+									name="blood_group"
 									rules={[{ required: true, message: "กรุณากรอกกลุ่มเลือด" }]}
 								>
 									<Input />
@@ -264,7 +299,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 										label="โรคประจำตัว(ถ้ามี)"
-										name="UD"
+										name="ud"
 								>
 									<Input />
 								</Form.Item>
@@ -275,7 +310,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="บ้านเลขที่"
-									name="HouseNo"
+									name="house_no"
 									rules={[{ required: true, message: "กรุณากรอกบ้านเลขที่" }]}
 								>
 									<Input />
@@ -284,7 +319,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="หมู่ที่"
-									name="VillageNo"
+									name="village_no"
 									rules={[{ required: true, message: "กรุณากรอกบ้านหมู่ที่" }]}
 								>
 									<Input />
@@ -293,7 +328,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="ชื่อหมู่บ้าน"
-									name="Village"
+									name="village"
 									rules={[{ required: true, message: "กรุณากรอกชื่อหมู่บ้าน" }]}
 								>
 									<Input />
@@ -302,7 +337,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="ซอย"
-									name="Alley"
+									name="alley"
 									rules={[{ required: true, message: "กรุณากรอกซอย" }]}
 								>
 									<Input />
@@ -311,7 +346,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="ถนน"
-									name="Road"
+									name="road"
 									rules={[{ required: true, message: "กรุณากรอกถนน !" }]}
 								>
 									<Input />
@@ -320,7 +355,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="ตำบล/แขวง"
-									name="SubDistrict"
+									name="sub_district"
 									rules={[{ required: true, message: "กรุณากรอกตำบล/แขวง" }]}
 								>
 									<Input />
@@ -329,7 +364,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="อำเภอ/เขต"
-									name="District"
+									name="district"
 									rules={[{ required: true, message: "กรุณากรอกอำเภอ/เขต" }]}
 									>
 									<Input />
@@ -338,7 +373,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="จังหวัด"
-									name="Province"
+									name="province"
 									rules={[{ required: true, 
 														message: "กรุณากรอกชื่อจังหวัดที่ถูกต้อง",}]}
 								>
@@ -348,7 +383,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="รหัสไปรษณีย์"
-									name="PostCode"
+									name="post_code"
 									rules={[{ required: true, message: "กรุณากรอกรหัสไปรษณีย์" },
 										{pattern: /^[0-9]{5}$/, message: "กรุณากรอกรหัสไปรษณีย์ (5 หลัก)" }]}
 									>
@@ -361,7 +396,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="ชื่อ - สกุลบิดา"
-									name="FathersName"
+									name="fathers_name"
 									rules={[{ required: true, message: "กรุณากรอกชื่อ-สกุลบิดา" }]}
 								>
 									<Input />
@@ -370,7 +405,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="ชื่อ - สกุลมารดา"
-									name="MathersName"
+									name="mathers_name"
 									rules={[{ required: true, message: "กรุณากรอกชื่อ-สกุลมารดา" }]}
 								>
 									<Input />
@@ -379,7 +414,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="อาชีพบิดา"
-									name="OccupationFather"
+									name="occupation_father"
 									rules={[{ required: true, message: "กรุณากรอกอาชีพบิดา" }]}
 								>
 									<Input />
@@ -388,7 +423,7 @@ function PersonalEdit() {
 								<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 									<Form.Item
 										label="อาชีพมารดา"
-										name="OccupationMather"
+										name="occupation_mather"
 										rules={[{ required: true, message: "กรุณากรอกอาชีพมารดา" }]}
 									>
 										<Input />
@@ -397,7 +432,7 @@ function PersonalEdit() {
 								<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 									<Form.Item
 										label="หมายเลขโทรศัพท์มือถือบิดา"
-										name="PhoneFather"
+										name="phone_father"
 										rules={[{ required: true, message: "กรุณากรอกหมายเลขโทรศัพท์มือถือ" },
 														{ pattern: /^[0-9]{10}$/, message: "กรุณากรอกหมายเลขโทรศัพท์มือถือ (10 หลัก)" }]}
 									>
@@ -407,7 +442,7 @@ function PersonalEdit() {
 								<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 									<Form.Item
 										label="หมายเลขโทรศัพท์มือถือมารดา"
-										name="PhoneMather"
+										name="phone_mather"
 										rules={[{ required: true, message: "กรุณากรอกหมายเลขโทรศัพท์มือถือ" },
 														{ pattern: /^[0-9]{10}$/, message: "กรุณากรอกหมายเลขโทรศัพท์มือถือ (10 หลัก)" }]}
 									>
@@ -439,7 +474,7 @@ function PersonalEdit() {
 								<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 									<Form.Item
 										label="ผู้ปกครอง"
-										name="guardian_id"
+										name="guardians_id"
 										rules={[{ required: true, message: "กรุณาเลือกผู้ปกครอง",}]}
 									>
 									<Select
@@ -457,7 +492,7 @@ function PersonalEdit() {
 								<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 									<Form.Item
 										label="หรือผู้ปกครอง ชื่อ/สกุล"
-										name="OrGuardiansName"
+										name="or_guardians_name"
 									>
 										<Input />
 									</Form.Item>
@@ -465,7 +500,7 @@ function PersonalEdit() {
 								<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 									<Form.Item
 										label="เกี่ยวข้องเป็น"
-										name="Relationship"
+										name="relationship"
 									>
 										<Input />
 									</Form.Item>
@@ -473,7 +508,7 @@ function PersonalEdit() {
 								<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 									<Form.Item
 										label="อาชีพ"
-										name="OccupationGuardian"
+										name="occupation_guardian"
 									>
 										<Input />
 									</Form.Item>
@@ -481,7 +516,7 @@ function PersonalEdit() {
 								<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 									<Form.Item
 										label="หมายเลขโทรศัพท์มือถือ"
-										name="PhoneGuardian"
+										name="phone_guardian"
 										rules={[{ message: "กรุณากรอกหมายเลขโทรศัพท์มือถือ" },
 														{ pattern: /^[0-9]{10}$/, message: "กรุณากรอกหมายเลขโทรศัพท์มือถือ (10 หลัก)" }]}
 									>
@@ -494,7 +529,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="สำเร็จการศึกษาขั้นสุดท้ายจาก"
-									name="LatestGraduationFrom"
+									name="latest_graduation_from"
 									rules={[{ required: true, message: "กรุณากรอกชื่อโรงเรียน" }]}
 								>
 									<Input placeholder="กรอกชื่อโรงเรียน" />
@@ -504,7 +539,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="เมื่อปี พ.ศ."
-									name="GraduatedYear"
+									name="graduated_year"
 									rules={[{ required: true, message: "กรุณากรอก พ.ศ.",}]}
 								>
 								<InputNumber
@@ -517,7 +552,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="GPAX"
-									name="Gpax"
+									name="gpax"
 									rules={[{ required: true, message: "กรุณากรอก gpax",}]}
 								>
 								<InputNumber
@@ -531,7 +566,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="พาหนะส่วนตัวที่ใช้"
-									name="PersonalVehicles"
+									name="personal_vehicles"
 								>
 									<Input />
 								</Form.Item>
@@ -539,7 +574,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="สี"
-									name="Color"
+									name="color"
 								>
 									<Input />
 								</Form.Item>
@@ -547,7 +582,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="หมายเลขทะเบียน"
-									name="PlateNo"
+									name="plate_no"
 								>
 									<Input />
 								</Form.Item>
@@ -555,7 +590,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="วันครบกำหนดเสียภาษี"
-									name="TaxDate"
+									name="tax_date"
 								>
 									<DatePicker style={{ width: "100%" }} />
 								</Form.Item>
@@ -563,7 +598,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="จังหวัด"
-									name="ProvinceVehicle"
+									name="province_vehicle"
 									rules={[{
 											//pattern: /^[ก-ฮA-Za-z\s]{1,50}$/, 
 											message: "กรุณากรอกชื่อจังหวัดที่ถูกต้อง",
@@ -575,7 +610,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="ใบขับขี่"
-									name="LicenseID"
+									name="licenses_id"
 									rules={[{ required: false, message: "กรุณาเลือกใบขับขี่",}]}
 								>
 								<Select
@@ -592,7 +627,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="ประเภท (ถ้ามี)"
-									name="Type"
+									name="type"
 								>
 									<Input />
 								</Form.Item>
@@ -600,7 +635,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="วันบัตรหมดอายุ"
-									name="ExpiredCard"
+									name="expired_card"
 								>
 									<DatePicker style={{ width: "100%" }} />
 								</Form.Item>

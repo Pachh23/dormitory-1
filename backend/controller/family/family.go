@@ -45,6 +45,8 @@ func GetFamily(c *gin.Context) {
 			Relationship:       nil,
 			OccupationGuardian: nil,
 			PhoneGuardian:      nil,
+			GuardiansID:        0,
+			FamilyStatusID:     0,
 
 			// กำหนดฟิลด์อื่น ๆ ตามโครงสร้างของ entity.Other
 		}
@@ -52,4 +54,32 @@ func GetFamily(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, family)
+}
+
+// PATCH /update-family
+func UpdateFamily(c *gin.Context) {
+	var family entity.Family
+	FamilyID := c.Param("id")
+	// Get the database connection
+	db := config.DB()
+
+	// Check if the personal information exists
+	result := db.First(&family, "id = ?", FamilyID)
+	if result.Error != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Family ID not found"})
+		return
+	}
+
+	// Bind the incoming JSON payload to the personal object
+	if err := c.ShouldBindJSON(&family); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Bad request, unable to map payload"})
+		return
+	}
+
+	result = db.Save(&family)
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Bad request"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "Updated successful"})
 }

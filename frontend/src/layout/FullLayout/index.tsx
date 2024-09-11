@@ -190,7 +190,8 @@ const FullLayout: React.FC = () => {
               <Route path="/" element={<Homepages />} />
               <Route path="/personal" element={<Personal />} />
               <Route path="/personal/create" element={<PersonalCreate />} />
-              <Route path="/personal/edit/:id" element={<PersonalEdit />} />
+             <Route path="/personal/edit/:id" element={<PersonalEdit />} /> 
+              {/*   <Route path="/personal/edit" element={<PersonalEdit />} /> */}
               <Route path="/payment" element={<Paymentpages />} />
               <Route path="/dorm-booking" element={<DormBookingpages />} />
               <Route path="/list" element={<Listpages />} />
