@@ -53,23 +53,9 @@ func GetPersonal(c *gin.Context) {
 	db := config.DB()
 	results := db.First(&personal, ID)
 
-	// ถ้าผลการค้นหามีข้อผิดพลาด หรือไม่พบข้อมูล
-	if results.Error != nil {
-		// คืนค่าฟิลด์ว่างโดยไม่แสดงข้อผิดพลาดหรือสถานะ 404
-		personal = entity.Personal{
-			// กำหนดค่าฟิลด์ว่างตามที่ต้องการ เช่น สตริงว่าง หรือค่าเริ่มต้นของชนิดข้อมูล
-			Nickname:    "", // ตัวอย่างการกำหนดค่าเป็นว่าง
-			CitizenID:   "",
-			Phone:       "",
-			Nationality: "",
-			Race:        "",
-			Religion:    "",
-			BloodGroup:  "",
-			UD:          nil,
-
-			// กำหนดฟิลด์อื่น ๆ ตามโครงสร้างของ entity.Other
-		}
-		c.JSON(http.StatusNoContent, gin.H{})
+	// ถ้าไม่มีข้อมูล จะไม่แสดง error แต่จะแสดงวัตถุว่างเปล่า
+	if results.Error != nil || personal.ID == 0 {
+		c.JSON(http.StatusOK, personal)
 		return
 	}
 	c.JSON(http.StatusOK, personal)

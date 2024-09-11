@@ -2,7 +2,7 @@ import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import type { ColumnsType } from "antd/es/table";
 import { useState, useEffect } from "react";
-import { GetAddressById ,GetStudentsById,GetPersonalById,GetOtherById,GetFamilyById,GetPersonalDetails} from "../../services/https/index";
+import { GetAddressById ,GetStudentsById,GetPersonalById,GetOtherById,GetFamilyById,} from "../../services/https/index";
 import { PersonalInterface } from "../../interfaces/Personal";
 import { StudentInterface } from "../../interfaces/Student";
 import { AddressInterface } from "../../interfaces/Address";

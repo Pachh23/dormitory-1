@@ -7,12 +7,14 @@ import { PersonalInterface } from "../../../interfaces/Personal";
 import { AddressInterface } from "../../../interfaces/Address";
 import { FamilyInterface } from "../../../interfaces/Family";
 import { OtherInteface } from "../../../interfaces/Other";
+import { StudentInterface } from "../../../interfaces/Student";
 import { GetAddressById,
-	GetFamilyById,GetOtherById,GetPersonalById,
-	UpdateAddressById,UpdateFamilyById,UpdateOtherById,UpdatePersonalById } from "../../../services/https/index";
+	GetFamilyById,GetOtherById,GetPersonalById,GetStudentsById,
+	UpdateAddressById,UpdateFamilyById,UpdateOtherById,UpdatePersonalById, 
+	UpdateStudentsById} from "../../../services/https/index";
 import dayjs from "dayjs";
 
-interface CombinedData extends PersonalInterface ,AddressInterface, FamilyInterface, OtherInteface{} // Combining both interfaces
+interface CombinedData extends StudentInterface,PersonalInterface ,AddressInterface, FamilyInterface, OtherInteface{} // Combining both interfaces
 
 function PersonalEdit() {
 	const navigate = useNavigate();
@@ -23,19 +25,22 @@ function PersonalEdit() {
 	const getStudentData = async (id: string) => {
 		try {
 			// เรียก API หลายตัวพร้อมกัน
-			const [ personalRes, addressRes, familyRes, otherRes] = await Promise.all([
+			const [ studentRes,personalRes, addressRes, familyRes, otherRes] = await Promise.all([
+				GetStudentsById(id),
 				GetPersonalById(id),
 				GetAddressById(id),
 				GetFamilyById(id),
 				GetOtherById(id)
 			]);
 			// ตรวจสอบข้อมูลที่ได้รับ
+			console.log("Student Response:", studentRes.data);
 			console.log("Personal Response:", personalRes.data);
 			console.log("Address Response:", addressRes.data);
 			console.log("Family Response:", familyRes.data);
 			console.log("Other Response:", otherRes.data);
 			// ตรวจสอบสถานะการตอบกลับของ API
 			if (
+				studentRes.status === 200 ||
 				personalRes.status === 200 ||
 				addressRes.status === 200 ||
 				familyRes.status === 200 ||
@@ -45,6 +50,7 @@ function PersonalEdit() {
 				// ตั้งค่าให้ฟอร์มเมื่อดึงข้อมูลสำเร็จ
 				form.setFieldsValue({
 					
+					Birthday: dayjs(studentRes.data.Birthday),
 					// ข้อมูลจาก Personal
 					nickname: personalRes.data.nickname,
 					citizen_id: personalRes.data.citizen_id,
@@ -113,6 +119,9 @@ function PersonalEdit() {
 	};
 	const onFinish = async (values: CombinedData) => {
 		
+		let studentPayload ={
+			Birthday: values.Birthday,
+		}
 		let personalPayload = {
 			nickname: values.nickname,
 			citizen_id: values.citizen_id,
@@ -170,7 +179,8 @@ function PersonalEdit() {
 		};
 		
 		try {
-			const [personalRes, addressRes, familyRes, otherRes] = await Promise.all([
+			const [studentRes,personalRes, addressRes, familyRes, otherRes] = await Promise.all([
+				UpdateStudentsById(id,studentPayload),
 				UpdatePersonalById(id, personalPayload),
 				UpdateAddressById(id, addressPayload),
 				UpdateFamilyById(id, familyPayload),
@@ -240,6 +250,20 @@ function PersonalEdit() {
 								<Input />
 								</Form.Item>
 							</Col>
+							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              <Form.Item
+                label="วันเกิด"
+                name="Birthday"
+                rules={[
+                  {
+                    required: true,
+                    message: "กรุณาเลือกวัน/เดือน/ปี เกิด !",
+                  },
+                ]}
+              >
+                <DatePicker style={{ width: "100%" }} />
+              </Form.Item>
+            </Col>
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="รหัสบัตรประชาชน"

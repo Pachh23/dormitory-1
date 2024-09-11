@@ -30,27 +30,9 @@ func GetFamily(c *gin.Context) {
 	db := config.DB()
 	results := db.Preload("FamilyStatus").Preload("Guardian").First(&family, ID)
 
-	// ถ้าผลการค้นหามีข้อผิดพลาด หรือไม่พบข้อมูล
-	if results.Error != nil {
-		// คืนค่าฟิลด์ว่างโดยไม่แสดงข้อผิดพลาดหรือสถานะ 404
-		family = entity.Family{
-			// กำหนดค่าฟิลด์ว่างตามที่ต้องการ เช่น สตริงว่าง หรือค่าเริ่มต้นของชนิดข้อมูล
-			FathersName:        "", // ตัวอย่างการกำหนดค่าเป็นว่าง
-			MathersName:        "",
-			OccupationFather:   "",
-			OccupationMather:   "",
-			PhoneFather:        "",
-			PhoneMather:        "",
-			OrGuardiansName:    nil,
-			Relationship:       nil,
-			OccupationGuardian: nil,
-			PhoneGuardian:      nil,
-			GuardiansID:        0,
-			FamilyStatusID:     0,
-
-			// กำหนดฟิลด์อื่น ๆ ตามโครงสร้างของ entity.Other
-		}
-		c.JSON(http.StatusNoContent, gin.H{})
+	// ถ้าไม่มีข้อมูล จะไม่แสดง error แต่จะแสดงวัตถุว่างเปล่า
+	if results.Error != nil || family.ID == 0 {
+		c.JSON(http.StatusOK, family)
 		return
 	}
 	c.JSON(http.StatusOK, family)

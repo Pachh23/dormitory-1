@@ -31,29 +31,11 @@ func GetOther(c *gin.Context) {
 	// ค้นหาข้อมูลที่มี id ตรงกับที่ได้รับมา
 	results := db.Preload("License").First(&other, ID)
 
-	// ถ้าผลการค้นหามีข้อผิดพลาด หรือไม่พบข้อมูล
-	if results.Error != nil {
-		// คืนค่าฟิลด์ว่างโดยไม่แสดงข้อผิดพลาดหรือสถานะ 404
-		other = entity.Other{
-			// กำหนดค่าฟิลด์ว่างตามที่ต้องการ เช่น สตริงว่าง หรือค่าเริ่มต้นของชนิดข้อมูล
-			LatestGraduationFrom: "", // ตัวอย่างการกำหนดค่าเป็นว่าง
-			GraduatedYear:        0,
-			Gpax:                 0,
-			PersonalVehicles:     nil,
-			Color:                nil,
-			PlateNo:              nil,
-			TaxDate:              nil,
-			ProvinceVehicle:      nil,
-			Type:                 nil,
-			ExpiredCard:          nil,
-			LicensesID:            nil,
-			// กำหนดฟิลด์อื่น ๆ ตามโครงสร้างของ entity.Other
-		}
-		// คืนฟิลด์ว่างกลับไปพร้อมสถานะ 200
+	// ถ้าไม่มีข้อมูล จะไม่แสดง error แต่จะแสดงวัตถุว่างเปล่า
+	if results.Error != nil || other.ID == 0 {
 		c.JSON(http.StatusOK, other)
 		return
 	}
-
 	c.JSON(http.StatusOK, other)
 }
 

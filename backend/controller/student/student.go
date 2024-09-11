@@ -68,6 +68,7 @@ func GetStudent(c *gin.Context) {
 
 	db := config.DB()
 	results := db.Preload("Gender").First(&student, ID)
+	
 	if results.Error != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": results.Error.Error()})
 		return
