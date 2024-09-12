@@ -70,7 +70,7 @@ function PersonalEdit() {
 					sub_district: addressRes.data.sub_district,
 					district: addressRes.data.district,
 					province: addressRes.data.province,
-					zip_code: addressRes.zip_code,
+					zip_code: addressRes.data.zip_code,
 					
 					// ข้อมูลจาก Family
 					fathers_name: familyRes.data.fathers_name,
@@ -409,8 +409,7 @@ function PersonalEdit() {
 								<Form.Item
 									label="รหัสไปรษณีย์"
 									name="zip_code"
-									rules={[{ required: true, message: "กรุณากรอกรหัสไปรษณีย์" },
-										{pattern: /^[0-9]{5}$/, message: "กรุณากรอกรหัสไปรษณีย์ (5 หลัก)" }]}
+									rules={[{ required: true, message: "กรุณากรอกรหัสไปรษณีย์" }]}
 									>
 									<Input />
 								</Form.Item>

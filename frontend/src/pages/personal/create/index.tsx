@@ -251,8 +251,7 @@ function PersonalCreate() {
 								<Form.Item
 									label="รหัสไปรษณีย์"
 									name="zip_code"
-									rules={[{ required: true, message: "กรุณากรอกรหัสไปรษณีย์" },
-										{pattern: /^[0-9]{5}$/, message: "กรุณากรอกรหัสไปรษณีย์ (5 หลัก)" }]}
+									rules={[{ required: true, message: "กรุณากรอกรหัสไปรษณีย์" }]}
 									>
 									<Input />
 								</Form.Item>
