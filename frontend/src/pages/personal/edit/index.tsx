@@ -79,8 +79,8 @@ function PersonalEdit() {
 					occupation_mather: familyRes.data.occupation_mather,
 					phone_father: familyRes.data.phone_father,
 					phone_mather: familyRes.data.phone_mather,
-					family_status_id: familyRes.data.family_status_id?.ID,
-					guardian_id: familyRes.data.guardian_id?.ID,
+					family_status_id: familyRes.data.family_status?.ID,
+					guardian_id: familyRes.data.guardian?.ID,
 					or_guardians_name: familyRes.data.or_guardians_name,
 					relationship: familyRes.data.relationship,
 					occupation_guardian: familyRes.data.occupation_guardian,
@@ -95,7 +95,7 @@ function PersonalEdit() {
 					plate_no: otherRes.data.plate_no,
 					vehicle_tax_due_date: dayjs(otherRes.data.vehicle_tax_due_date),
 					province_vehicle: otherRes.data.province_vehicle,
-					licenses_id: otherRes.data.licenses_id?.ID,
+					licenses_id: otherRes.data.license?.ID,
 					type: otherRes.data.type,
 					expiry: dayjs(otherRes.data.expiry),
 				});
@@ -499,7 +499,7 @@ function PersonalEdit() {
 								<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 									<Form.Item
 										label="ผู้ปกครอง"
-										name="guardians_id"
+										name="guardian_id"
 										rules={[{ required: true, message: "กรุณาเลือกผู้ปกครอง",}]}
 									>
 									<Select
