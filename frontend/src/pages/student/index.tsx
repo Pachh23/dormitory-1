@@ -7,12 +7,18 @@ import { ListStudents, DeleteStudentsById } from "../../services/https/index";
 import { StudentInterface } from "../../interfaces/Student";
 import { Link, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
+import 'dayjs/locale/th'; // นำเข้า locale ภาษาไทย
+
+dayjs.locale('th');
 
 function Student() {
   const navigate = useNavigate();
   const [students, setStudents] = useState<StudentInterface[]>([]);
   const [messageApi, contextHolder] = message.useMessage();
   const myId = localStorage.getItem("id");
+  const formattedDate = dayjs('1995-07-28').format('DD MMMM YYYY');
+  console.log(formattedDate); // Output: "วันเสาร์ 28 กรกฎาคม 1995"
+
 
   const columns: ColumnsType<StudentInterface> = [
     {
@@ -55,7 +61,7 @@ function Student() {
     {
       title: "วันเกิด",
       key: "birthday",
-      render: (record) => <>{dayjs(record.birthday).format("dddd DD MMM YYYY")}</>,
+      render: (record) => <>{dayjs(record.birthday).locale('th').format("DD MMM YYYY")}</>,
     },
     {
       title: "ชั้นปี",

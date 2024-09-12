@@ -9,8 +9,8 @@ import (
 type Other struct {
 	gorm.Model
 	LatestGraduationFrom string     `json:"latest_graduation_from"`
-	GraduationYear       uint       `json:"graduation_year"`
-	Gpax                 float64    `json:"GPAX"`
+	GraduationYear       *uint      `json:"graduation_year"`
+	Gpax                 *float64   `json:"GPAX"`
 	PersonalVehicles     *string    `json:"personal_vehicles"`
 	Color                *string    `json:"color"`
 	PlateNo              *string    `json:"plate_no"`

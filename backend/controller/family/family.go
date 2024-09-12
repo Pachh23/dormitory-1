@@ -8,20 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// GET /list-family
-func ListFamily(c *gin.Context) {
-
-	var family []entity.Family
-
-	db := config.DB()
-	results := db.Find(&family)
-	if results.Error != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": results.Error.Error()})
-		return
-	}
-	c.JSON(http.StatusOK, family)
-}
-
 // GET /get-family/:id
 func GetFamily(c *gin.Context) {
 	ID := c.Param("id")

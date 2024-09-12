@@ -1,7 +1,6 @@
 import { Space, Button, Col, Row, Divider, Form, Input, Card, message, DatePicker, InputNumber, Select } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { PersonalDetailInterface } from "../../../interfaces/PersonalDetails";
-//import { PersonalInterface } from "../../../interfaces/Personal";
 import { CreatePersonalDetail } from "../../../services/https";
 import { useNavigate, Link } from "react-router-dom";
 

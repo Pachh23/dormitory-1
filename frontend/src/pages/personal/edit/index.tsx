@@ -40,10 +40,10 @@ function PersonalEdit() {
 			console.log("Other Response:", otherRes.data);
 			// ตรวจสอบสถานะการตอบกลับของ API
 			if (
-				studentRes.status === 200 ||
-				personalRes.status === 200 ||
-				addressRes.status === 200 ||
-				familyRes.status === 200 ||
+				studentRes.status === 200 &&
+				personalRes.status === 200 &&
+				addressRes.status === 200 &&
+				familyRes.status === 200 &&
 				otherRes.status === 200
 			) 
 			{
@@ -80,7 +80,7 @@ function PersonalEdit() {
 					phone_father: familyRes.data.phone_father,
 					phone_mather: familyRes.data.phone_mather,
 					family_status_id: familyRes.data.family_status?.ID,
-					guardian_id: familyRes.data.guardian?.ID,
+					guardians_id: familyRes.data.guardian?.ID,
 					or_guardians_name: familyRes.data.or_guardians_name,
 					relationship: familyRes.data.relationship,
 					occupation_guardian: familyRes.data.occupation_guardian,
@@ -189,10 +189,10 @@ function PersonalEdit() {
 			
 			// ตรวจสอบว่าทุก API ตอบกลับสถานะสำเร็จ (200)
 			if (
-				studentRes.status === 200 ||
-				personalRes.status === 200 ||
-				addressRes.status === 200 ||
-				familyRes.status === 200 ||
+				studentRes.status === 200 &&
+				personalRes.status === 200 &&
+				addressRes.status === 200 &&
+				familyRes.status === 200 &&
 				otherRes.status === 200
 			) {
 				messageApi.open({
@@ -487,7 +487,7 @@ function PersonalEdit() {
 										defaultValue=""
 										style={{ width: "100%" }}
 										options={[
-										{ value: "", lable: "กรุณาเลือกสถานภาพครอบครัว", disabled: true },
+											{ value: "", label: "กรุณาเลือกสถานภาพครอบครัว", disabled: true },
 										{ value: 1, label: "อยู่ด้วยกัน" },
 										{ value: 2, label: "แยกกันอยู่" },
 										{ value: 3, label: "อื่นๆ (พ่อหรือแม่เสียชีวิต)" },
@@ -498,7 +498,7 @@ function PersonalEdit() {
 								<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 									<Form.Item
 										label="ผู้ปกครอง"
-										name="guardian_id"
+										name="guardians_id"
 										rules={[{ required: true, message: "กรุณาเลือกผู้ปกครอง",}]}
 									>
 									<Select

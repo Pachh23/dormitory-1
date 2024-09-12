@@ -76,23 +76,3 @@ func CreatePersonalDetails(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"message": "Personal details created successfully"})
 }
 
-// GET /personal-details
-func GetPersonalDetails(c *gin.Context) {
-	// ดึงข้อมูล StudentID จากการเข้าสู่ระบบ (ตัวอย่าง: จาก JWT token หรือ session)
-	ID := c.Param("id")
-	var student entity.Students
-	// ดึงข้อมูล Personal, Address, Family, และ Other ที่เกี่ยวข้องกับ Student
-	db := config.DB()
-	// ใช้ Preload เพื่อนำข้อมูลที่มีความสัมพันธ์เข้ามาในผลลัพธ์ครั้งเดียว
-	results := db.Preload("Address").Preload("Personal").Preload("Family").Preload("Other").First(&student, ID)
-	if results.Error != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": results.Error.Error()})
-		return
-	}
-	if student.ID == 0 {
-		c.JSON(http.StatusNoContent, gin.H{})
-		return
-	}
-	c.JSON(http.StatusOK, student)
-
-}

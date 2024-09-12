@@ -22,9 +22,8 @@ function Personal() {
   const [messageApi, contextHolder] = message.useMessage();
   //const myId = localStorage.getItem("id");
   // ฟอร์แมตวันที่ในรูปแบบ "วัน (วันที่ เดือน ปี)"
-const formattedDate = dayjs('1995-07-28').format('DD MMMM YYYY');
-
-console.log(formattedDate); // Output: "วันเสาร์ 28 กรกฎาคม 1995"
+  const formattedDate = dayjs('1995-07-28').format('DD MMMM YYYY');
+  console.log(formattedDate); // Output: "วันเสาร์ 28 กรกฎาคม 1995"
 
   const getStudentData = async (id: string) => {
     try {
@@ -38,10 +37,10 @@ console.log(formattedDate); // Output: "วันเสาร์ 28 กรกฎ
       ]);
 
       if (
-        studentRes.status === 200  ||
-        personalRes.status === 200 ||
-        addressRes.status === 200 ||
-        familyRes.status === 200 ||
+        studentRes.status === 200  &&
+        personalRes.status === 200 &&
+        addressRes.status === 200 &&
+        familyRes.status === 200 &&
         otherRes.status === 200
       ) {
         // Combine data into a single object
@@ -88,7 +87,7 @@ console.log(formattedDate); // Output: "วันเสาร์ 28 กรกฎ
       key: "id",
     },*/
     {
-      title: "ข้อมูลนักศึกษา",
+      //title: "ข้อมูลนักศึกษา",
       key: "student_info",
       render: (record) => (
         <>
@@ -188,10 +187,9 @@ console.log(formattedDate); // Output: "วันเสาร์ 28 กรกฎ
                   </tr>
                   <tr>
                     <td>สถานภาพครอบครัว</td>
-                   <td>{record?.family_status?.family_status}</td> 
+                    <td>{record?.family_status?.family_status}</td> 
                     <td>ผู้ปกครอง</td>
                     <td>{record?.guardian?.guardian}</td>
-                  {/* <td>{record?.guardian?.guardian}</td>*/}
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: '#f0f0f0' }}>หรือผู้ปกครอง ชื่อ/สกุล</td>
@@ -219,7 +217,7 @@ console.log(formattedDate); // Output: "วันเสาร์ 28 กรกฎ
                     <td>เมื่อปี พ.ศ.</td>
                     <td>{record.graduation_year}</td>
                     <td>GPAX</td>
-                    <td>{record.GPAX ? record.GPAX.toFixed(2) : ""}</td>
+                    <td>{record.GPAX ? record.GPAX.toFixed(2) : ""}</td> 
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: '#f0f0f0' }}>พาหนะส่วนตัวที่ใช้</td>
@@ -231,10 +229,7 @@ console.log(formattedDate); // Output: "วันเสาร์ 28 กรกฎ
                     <td>หมายเลขทะเบียน</td>
                     <td>{record.plate_no}</td>
                     <td>วันครบกำหนดเสียภาษี</td>
-                  {/*  <td>{record.date_tax ? dayjs(record.date_tax).format("dddd DD MMM YYYY") : ""}</td>*/}
-                    <td>{dayjs(record.vehicle_tax_due_date).locale('th').format('DD MMMM YYYY')}</td>
-
-                  {/*  <td>{dayjs(record.tax_date || "-").format("dddd DD MMM YYYY")}</td>*/}
+                    <td>{record.vehicle_tax_due_date? dayjs(record.vehicle_tax_due_date).locale('th').format('DD MMMM YYYY') : ""}</td>
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: '#f0f0f0' }}>จังหวัด</td>
@@ -246,8 +241,8 @@ console.log(formattedDate); // Output: "วันเสาร์ 28 กรกฎ
                     <td>ประเภท (ถ้ามี)</td>
                     <td>{record.type}</td>
                     <td>วันบัตรหมดอายุ</td>
-                  {/* <td>{dayjs(record.expiry).format("dddd DD MMM YYYY")}</td> */}
-                    <td>{dayjs(record.expiry).locale('th').format('DD MMMM YYYY')}</td>
+                    <td>{record.expiry ? dayjs(record.expiry).locale('th').format('DD MMMM YYYY') : ""}</td>
+                  {/*  <td>{dayjs(record.expiry).locale('th').format('DD MMMM YYYY')}</td>*/}
                   </tr>
                 </tbody>
               </table>

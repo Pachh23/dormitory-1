@@ -87,25 +87,6 @@ async function CreatePersonalDetail(data: PersonalDetailInterface) {
     .catch((e) => e.response);
 }
 
-async function ListAddress() {
-  return await axios
-    .get(`${apiUrl}/list-address`, requestOptions)
-    .then((res) => res)
-    .catch((e) => e.response);
-}
-
-async function ListFamily() {
-  return await axios
-    .get(`${apiUrl}/list-family`, requestOptions)
-    .then((res) => res)
-    .catch((e) => e.response);
-}
-async function ListOther() {
-  return await axios
-    .get(`${apiUrl}/list-other`, requestOptions)
-    .then((res) => res)
-    .catch((e) => e.response);
-}
 async function GetAddressById(id: string) {
   return await axios
     .get(`${apiUrl}/get-address/${id}`, requestOptions)
@@ -125,13 +106,6 @@ async function GetOtherById(id: string) {
     .get(`${apiUrl}/get-other/${id}`, requestOptions)
     .then((res) => res)
     .catch((e) => e.response);
-}
-// เรียกใช้ API หลายตัวพร้อมกัน
-async function GetPersonalDetails(id: string) {
-  return await axios
-  .get(`${apiUrl}/get-detail/${id}`, requestOptions)
-  .then((res) => res)
-  .catch((e) => e.response);
 }
 async function PersonalEdit(id: string, updatedData: any) {
   return await axios
@@ -170,13 +144,9 @@ export {
   ListPersonal,
   UpdatePersonalById,
   GetPersonalById,
-  ListAddress,
-  ListFamily,
-  ListOther,
   GetAddressById,
   GetFamilyById,
   GetOtherById,
-  GetPersonalDetails,
   PersonalEdit,
   UpdateAddressById,
   UpdateOtherById,
