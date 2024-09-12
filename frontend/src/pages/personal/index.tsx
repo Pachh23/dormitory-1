@@ -257,7 +257,7 @@ console.log(formattedDate); // Output: "วันเสาร์ 28 กรกฎ
       ),
       colSpan: 6, // Combine columns
     },
-    
+    /*
     {
       title: "",
       render: (record) => (
@@ -270,8 +270,9 @@ console.log(formattedDate); // Output: "วันเสาร์ 28 กรกฎ
         </Button>
       ),
       colSpan: 0,
-    },
+    },*/
   ];
+
 
   return (
     <>
@@ -287,6 +288,13 @@ console.log(formattedDate); // Output: "วันเสาร์ 28 กรกฎ
                 สร้างข้อมูล
               </Button>
             </Link>
+          {studentData && (
+            <Link to={`/personal/edit/${studentData.ID}`}>
+              <Button type="primary" icon={<EditOutlined />}>
+                เปลี่ยนแปลงข้อมูล
+              </Button>
+            </Link>
+          )}
           </Space>
         </Col>
       </Row>

@@ -50,7 +50,7 @@ function PersonalEdit() {
 				// ตั้งค่าให้ฟอร์มเมื่อดึงข้อมูลสำเร็จ
 				form.setFieldsValue({
 					
-					Birthday: dayjs(studentRes.data.Birthday),
+					birthday: dayjs(studentRes.data.birthday),
 					// ข้อมูลจาก Personal
 					nickname: personalRes.data.nickname,
 					citizen_id: personalRes.data.citizen_id,
@@ -254,7 +254,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
               <Form.Item
                 label="วันเกิด"
-                name="Birthday"
+                name="birthday"
                 rules={[
                   {
                     required: true,
