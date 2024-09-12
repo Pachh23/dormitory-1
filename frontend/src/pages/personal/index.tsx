@@ -22,7 +22,7 @@ function Personal() {
   const [messageApi, contextHolder] = message.useMessage();
   //const myId = localStorage.getItem("id");
   // ฟอร์แมตวันที่ในรูปแบบ "วัน (วันที่ เดือน ปี)"
-const formattedDate = dayjs('1995-07-28').format('dddd DD MMMM YYYY');
+const formattedDate = dayjs('1995-07-28').format('DD MMMM YYYY');
 
 console.log(formattedDate); // Output: "วันเสาร์ 28 กรกฎาคม 1995"
 
@@ -104,7 +104,7 @@ console.log(formattedDate); // Output: "วันเสาร์ 28 กรกฎ
                     <td style={{ backgroundColor: "#f0f0f0" }}>ชื่อเล่น</td>
                     <td>{record.nickname}</td>
                     <td style={{ backgroundColor: "#f0f0f0" }}>วันเกิด</td>
-                    <td>{dayjs(record.birthday).format("dddd DD MMM YYYY")}</td>
+                    <td>{dayjs(record.birthday).locale('th').format('DD MMMM YYYY')}</td>
                   </tr>
                   <tr>
                     <td>รหัสบัตรประชาชน</td>
@@ -232,7 +232,7 @@ console.log(formattedDate); // Output: "วันเสาร์ 28 กรกฎ
                     <td>{record.plate_no}</td>
                     <td>วันครบกำหนดเสียภาษี</td>
                   {/*  <td>{record.date_tax ? dayjs(record.date_tax).format("dddd DD MMM YYYY") : ""}</td>*/}
-                    <td>{dayjs(record.vehicle_tax_due_date).locale('th').format('dddd DD MMMM YYYY')}</td>
+                    <td>{dayjs(record.vehicle_tax_due_date).locale('th').format('DD MMMM YYYY')}</td>
 
                   {/*  <td>{dayjs(record.tax_date || "-").format("dddd DD MMM YYYY")}</td>*/}
                   </tr>
@@ -247,7 +247,7 @@ console.log(formattedDate); // Output: "วันเสาร์ 28 กรกฎ
                     <td>{record.type}</td>
                     <td>วันบัตรหมดอายุ</td>
                   {/* <td>{dayjs(record.expiry).format("dddd DD MMM YYYY")}</td> */}
-                    <td>{dayjs(record.expiry).locale('th').format('dddd DD MMMM YYYY')}</td>
+                    <td>{dayjs(record.expiry).locale('th').format('DD MMMM YYYY')}</td>
                   </tr>
                 </tbody>
               </table>
