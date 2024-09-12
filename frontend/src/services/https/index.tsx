@@ -107,7 +107,7 @@ async function GetOtherById(id: string) {
     .then((res) => res)
     .catch((e) => e.response);
 }
-async function PersonalEdit(id: string, updatedData: any) {
+async function PersonalChange(id: string, updatedData: any) {
   return await axios
     .put(`${apiUrl}/edit-personal/${id}`, updatedData, requestOptions)
     .then((res) => res)
@@ -147,7 +147,7 @@ export {
   GetAddressById,
   GetFamilyById,
   GetOtherById,
-  PersonalEdit,
+  PersonalChange,
   UpdateAddressById,
   UpdateOtherById,
   UpdateFamilyById

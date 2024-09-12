@@ -14,7 +14,7 @@ const Resigning = Loadable(lazy(() => import("../pages/form/ResigningForm")));
 const Status = Loadable(lazy(() => import("../pages/status")));
 const Personal = Loadable(lazy(() => import("../pages/personal")));
 const PersonalCreate = Loadable(lazy(() => import("../pages/personal/create")));
-const PersonalEdit = Loadable(lazy(() => import("../pages/personal/edit")));
+const PersonalChange = Loadable(lazy(() => import("../pages/personal/edit")));
 
 
 const StudentRoutes = (isLoggedInStudent : boolean): RouteObject => {
@@ -39,12 +39,8 @@ const StudentRoutes = (isLoggedInStudent : boolean): RouteObject => {
           },
          {
             path: "/personal/edit/:id",
-            element: <PersonalEdit />,
+            element: <PersonalChange />,
           },
-        /*  {
-            path: "/personal/edit/",
-            element: <PersonalEdit />,
-          },*/
         ],
       },
       {

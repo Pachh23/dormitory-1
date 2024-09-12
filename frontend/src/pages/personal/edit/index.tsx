@@ -16,7 +16,7 @@ import dayjs from "dayjs";
 
 interface CombinedData extends StudentInterface,PersonalInterface ,AddressInterface, FamilyInterface, OtherInteface{} // Combining both interfaces
 
-function PersonalEdit() {
+function PersonalChange() {
 	const navigate = useNavigate();
 	const [messageApi, contextHolder] = message.useMessage();
   const { id } = useParams<{ id: any }>();
@@ -693,4 +693,4 @@ function PersonalEdit() {
   );
 }
 
-export default PersonalEdit;
+export default PersonalChange;
