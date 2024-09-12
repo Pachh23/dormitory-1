@@ -1,4 +1,4 @@
-import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import type { ColumnsType } from "antd/es/table";
 import { useState, useEffect } from "react";
@@ -10,6 +10,9 @@ import { FamilyInterface } from "../../interfaces/Family";
 import { OtherInteface } from "../../interfaces/Other";
 import { Space, Table, Button, Col, Row, Divider, message, Card } from "antd";
 import dayjs from "dayjs";
+import 'dayjs/locale/th'; // นำเข้า locale ภาษาไทย
+// กำหนดให้ dayjs ใช้ locale ภาษาไทย
+dayjs.locale('th');
 
 interface CombinedData extends PersonalInterface, StudentInterface ,AddressInterface, FamilyInterface, OtherInteface{} // Combining both interfaces
 
@@ -17,13 +20,16 @@ function Personal() {
   const navigate = useNavigate();
   const [studentData, setStudentData] = useState<CombinedData | null>(null); // Store combined data
   const [messageApi, contextHolder] = message.useMessage();
-  const myId = localStorage.getItem("id");
+  //const myId = localStorage.getItem("id");
+  // ฟอร์แมตวันที่ในรูปแบบ "วัน (วันที่ เดือน ปี)"
+const formattedDate = dayjs('1995-07-28').format('dddd DD MMMM YYYY');
+
+console.log(formattedDate); // Output: "วันเสาร์ 28 กรกฎาคม 1995"
 
   const getStudentData = async (id: string) => {
     try {
       // Fetch all related data by student ID
       const [studentRes ,personalRes,addressRes,familyRes,otherRes ] = await Promise.all([
-        //GetPersonalDetails(id)
         GetStudentsById(id),
         GetPersonalById(id),
         GetAddressById(id),
@@ -154,7 +160,7 @@ function Personal() {
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: '#f0f0f0' }}>รหัสไปรษณีย์</td>
-                    <td colSpan={3}>{record.post_code}</td>
+                    <td colSpan={3}>{record.zip_code}</td>
                   </tr>
                 </tbody>
               </table>
@@ -211,9 +217,9 @@ function Personal() {
                   </tr>
                   <tr>
                     <td>เมื่อปี พ.ศ.</td>
-                    <td>{record.graduated_year || ""}</td>
+                    <td>{record.graduation_year}</td>
                     <td>GPAX</td>
-                    <td>{record.gpax ? record.gpax.toFixed(2) : ""}</td>
+                    <td>{record.GPAX ? record.GPAX.toFixed(2) : ""}</td>
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: '#f0f0f0' }}>พาหนะส่วนตัวที่ใช้</td>
@@ -225,7 +231,9 @@ function Personal() {
                     <td>หมายเลขทะเบียน</td>
                     <td>{record.plate_no}</td>
                     <td>วันครบกำหนดเสียภาษี</td>
-                    <td>{record.tax_date ? dayjs(record.tax_date).format("dddd DD MMM YYYY") : ""}</td>
+                  {/*  <td>{record.date_tax ? dayjs(record.date_tax).format("dddd DD MMM YYYY") : ""}</td>*/}
+                    <td>{dayjs(record.vehicle_tax_due_date).locale('th').format('dddd DD MMMM YYYY')}</td>
+
                   {/*  <td>{dayjs(record.tax_date || "-").format("dddd DD MMM YYYY")}</td>*/}
                   </tr>
                   <tr>
@@ -238,7 +246,8 @@ function Personal() {
                     <td>ประเภท (ถ้ามี)</td>
                     <td>{record.type}</td>
                     <td>วันบัตรหมดอายุ</td>
-                    <td>{record.expired_card ? dayjs(record.expired_card).format("dddd DD MMM YYYY") : ""}</td>
+                  {/* <td>{dayjs(record.expiry).format("dddd DD MMM YYYY")}</td> */}
+                    <td>{dayjs(record.expiry).locale('th').format('dddd DD MMMM YYYY')}</td>
                   </tr>
                 </tbody>
               </table>
@@ -254,7 +263,7 @@ function Personal() {
       render: (record) => (
         <Button
           type="primary"
-          icon={<DeleteOutlined />}
+          icon={<EditOutlined />}
           onClick={() => navigate(`/personal/edit/${record.ID}`)}
         >
           แก้ไขข้อมูล

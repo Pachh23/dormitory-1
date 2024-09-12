@@ -16,7 +16,7 @@ func DB() *gorm.DB {
 	return db
 }
 func ConnectionDB() {
-	database, err := gorm.Open(sqlite.Open("sa67.db?cache=shared"), &gorm.Config{})
+	database, err := gorm.Open(sqlite.Open("sa3.db?cache=shared"), &gorm.Config{})
 
 	if err != nil {
 		panic("failed to connect database")
@@ -63,7 +63,7 @@ func SetupDatabase() {
 
 	// Seed ข้อมูล student
 	studentHashedPassword, _ := HashPassword("1234567890123")
-	Birthday, _ := time.Parse("2006-01-02", "1988-11-12")
+	Birthday, _ := time.Parse("2006-01-02", "2003-11-12")
 	User := &entity.Students{
 		FirstName: "Nicha",
 		LastName:  "Wandee",

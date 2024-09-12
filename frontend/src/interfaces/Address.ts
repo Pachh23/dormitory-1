@@ -8,6 +8,6 @@ export interface AddressInterface{
 	sub_district?:  string;   
 	district?: string;
 	province?: string;
-	post_code?: string;
+	zip_code?: string;
   StudentID?: string; // เชื่อมโยงกับ Student
 }

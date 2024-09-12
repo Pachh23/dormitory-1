@@ -12,7 +12,7 @@ type Address struct {
 	SubDistrict string `json:"sub_district"`
 	District    string `json:"district"`
 	Province    string `json:"province"`
-	PostCode    string `json:"post_code"`
+	ZipCode     string `json:"zip_code"`
 
 	// One-to-one relationship with Student
 	//StudentID string

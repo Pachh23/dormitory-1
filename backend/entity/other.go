@@ -9,15 +9,15 @@ import (
 type Other struct {
 	gorm.Model
 	LatestGraduationFrom string     `json:"latest_graduation_from"`
-	GraduatedYear        uint       `json:"graduated_year"`
-	Gpax                 float64    `json:"gpax"`
+	GraduationYear       uint       `json:"graduation_year"`
+	Gpax                 float64    `json:"GPAX"`
 	PersonalVehicles     *string    `json:"personal_vehicles"`
 	Color                *string    `json:"color"`
 	PlateNo              *string    `json:"plate_no"`
-	TaxDate              *time.Time `json:"tax_date"`
+	VehicleTaxDueDate    *time.Time `json:"vehicle_tax_due_date"`
 	ProvinceVehicle      *string    `json:"province_vehicle"`
 	Type                 *string    `json:"type"`
-	ExpiredCard          *time.Time `json:"expired_card"`
+	Expiry               *time.Time `json:"expiry"`
 
 	LicensesID *uint     `json:"licenses_id"`
 	License    *Licenses `gorm:"foreignKey: licenses_id" json:"license"`

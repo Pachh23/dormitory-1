@@ -30,7 +30,7 @@ function PersonalCreate() {
 				sub_district: values.sub_district,
 				district: values.district,
 				province: values.province,
-				post_code: values.post_code,
+				zip_code: values.zip_code,
 			},
 			family: {
 				fathers_name: values.fathers_name,
@@ -48,16 +48,16 @@ function PersonalCreate() {
 			},
 			other:{
 				latest_graduation_from: values.latest_graduation_from,
-				graduated_year: values.graduated_year,
-				gpax: values.gpax,
+				graduation_year: values.graduation_year,
+				GPAX: values.GPAX,
 				personal_vehicles: values.personal_vehicles,
 				color: values.color,
 				plate_no: values.plate_no,
-				tax_date: values.tax_date,
+				vehicle_tax_due_date: values.vehicle_tax_due_date,
 				province_vehicle: values.province_vehicle,
 				licenses_id: values.licenses_id,
 				type: values.type,
-				expired_card: values.expired_card,
+				expiry: values.expiry,
 			}
 	};
 			const res = await CreatePersonalDetail(personalDetailData);
@@ -250,7 +250,7 @@ function PersonalCreate() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="รหัสไปรษณีย์"
-									name="post_code"
+									name="zip_code"
 									rules={[{ required: true, message: "กรุณากรอกรหัสไปรษณีย์" },
 										{pattern: /^[0-9]{5}$/, message: "กรุณากรอกรหัสไปรษณีย์ (5 หลัก)" }]}
 									>
@@ -406,7 +406,7 @@ function PersonalCreate() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="เมื่อปี พ.ศ."
-									name="graduated_year"
+									name="graduation_year"
 									rules={[{ required: true, message: "กรุณากรอก พ.ศ.",}]}
 								>
 								<InputNumber
@@ -419,7 +419,7 @@ function PersonalCreate() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="GPAX"
-									name="gpax"
+									name="GPAX"
 									rules={[{ required: true, message: "กรุณากรอก gpax",}]}
 								>
 								<InputNumber
@@ -458,7 +458,7 @@ function PersonalCreate() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="วันครบกำหนดเสียภาษี"
-									name="tax_date"
+									name="vehicle_tax_due_date"
 								>
 									<DatePicker style={{ width: "100%" }} />
 								</Form.Item>
@@ -502,7 +502,7 @@ function PersonalCreate() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="วันบัตรหมดอายุ"
-									name="expired_card"
+									name="expiry"
 								>
 									<DatePicker style={{ width: "100%" }} />
 								</Form.Item>

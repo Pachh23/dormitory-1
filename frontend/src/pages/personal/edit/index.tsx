@@ -70,7 +70,7 @@ function PersonalEdit() {
 					sub_district: addressRes.data.sub_district,
 					district: addressRes.data.district,
 					province: addressRes.data.province,
-					post_code: addressRes.post_code,
+					zip_code: addressRes.zip_code,
 					
 					// ข้อมูลจาก Family
 					fathers_name: familyRes.data.fathers_name,
@@ -88,16 +88,16 @@ function PersonalEdit() {
 					
 					// ข้อมูลจาก Other
 					latest_graduation_from: otherRes.data.latest_graduation_from,
-					graduated_year: otherRes.data.graduated_year,
-					gpax: otherRes.data.gpax,
+					graduation_year: otherRes.data.graduation_year,
+					GPAX: otherRes.data.GPAX,
 					personal_vehicles: otherRes.data.personal_vehicles,
 					color: otherRes.data.color,
 					plate_no: otherRes.data.plate_no,
-					tax_date: dayjs(otherRes.data.tax_date),
+					vehicle_tax_due_date: dayjs(otherRes.data.vehicle_tax_due_date),
 					province_vehicle: otherRes.data.province_vehicle,
 					licenses_id: otherRes.data.licenses_id?.ID,
 					type: otherRes.data.type,
-					expired_card: dayjs(otherRes.data.expired_card),
+					expiry: dayjs(otherRes.data.expiry),
 				});
 			} else {
 				// ถ้าไม่ได้รับข้อมูลจาก API
@@ -143,7 +143,7 @@ function PersonalEdit() {
 			sub_district: values.sub_district,
 			district: values.district,
 			province: values.province,
-			post_code: values.post_code,
+			zip_code: values.zip_code,
 			// ข้อมูลของ Address ที่ต้องการอัปเดต
 		};
 		
@@ -165,16 +165,16 @@ function PersonalEdit() {
 		
 		let otherPayload = {
 			latest_graduation_from: values.latest_graduation_from,
-			graduated_year: values.graduated_year,
-			gpax: values.gpax,
+			graduation_year: values.graduation_year,
+			GPAX: values.GPAX,
 			personal_vehicles: values.personal_vehicles,
 			color: values.color,
 			plate_no: values.plate_no,
-			tax_date: values.tax_date,
+			vehicle_tax_due_date: values.vehicle_tax_due_date,
 			province_vehicle: values.province_vehicle,
 			licenses_id: values.licenses_id,
 			type: values.type,
-			expired_card: values.expired_card,
+			expiry: values.expiry,
 			// ข้อมูลของ Other ที่ต้องการอัปเดต
 		};
 		
@@ -189,6 +189,7 @@ function PersonalEdit() {
 			
 			// ตรวจสอบว่าทุก API ตอบกลับสถานะสำเร็จ (200)
 			if (
+				studentRes.status === 200 ||
 				personalRes.status === 200 ||
 				addressRes.status === 200 ||
 				familyRes.status === 200 ||
@@ -407,7 +408,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="รหัสไปรษณีย์"
-									name="post_code"
+									name="zip_code"
 									rules={[{ required: true, message: "กรุณากรอกรหัสไปรษณีย์" },
 										{pattern: /^[0-9]{5}$/, message: "กรุณากรอกรหัสไปรษณีย์ (5 หลัก)" }]}
 									>
@@ -563,7 +564,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="เมื่อปี พ.ศ."
-									name="graduated_year"
+									name="graduation_year"
 									rules={[{ required: true, message: "กรุณากรอก พ.ศ.",}]}
 								>
 								<InputNumber
@@ -576,7 +577,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="GPAX"
-									name="gpax"
+									name="GPAX"
 									rules={[{ required: true, message: "กรุณากรอก gpax",}]}
 								>
 								<InputNumber
@@ -614,7 +615,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="วันครบกำหนดเสียภาษี"
-									name="tax_date"
+									name="vehicle_tax_due_date"
 								>
 									<DatePicker style={{ width: "100%" }} />
 								</Form.Item>
@@ -659,7 +660,7 @@ function PersonalEdit() {
 							<Col xs={24} sm={24} md={24} lg={24} xl={12}>
 								<Form.Item
 									label="วันบัตรหมดอายุ"
-									name="expired_card"
+									name="expiry"
 								>
 									<DatePicker style={{ width: "100%" }} />
 								</Form.Item>
