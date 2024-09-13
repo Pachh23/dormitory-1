@@ -7,9 +7,9 @@ import { Breadcrumb, Layout, Menu, theme, Button, message } from "antd";
 import logo from "../../assets/logo.png";
 import Homepages from "../../pages/homepage";
 import Paymentpages from "../../pages/payment";
-import DormBookingpages from "../../pages/dorm";
 import Personal from "../../pages/personal";
 import Listpages from "../../pages/list";
+import MainDorm1 from "../../pages/dorm/mainDorm1";
 import Repairpages from "../../pages/repair";
 import DelayedPaymentpages from "../../pages/form/DelayedPaymentForm";
 import EnExitingpages from "../../pages/form/EnExitingForm";
@@ -98,18 +98,18 @@ const FullLayout: React.FC = () => {
                   <span>ข้อมูลส่วนตัว</span>
                 </Link>
               </Menu.Item>
-
               <Menu.SubMenu
-                key="dorm-booking"
+                key="dorm"
                 title={
                   <span>
-                   <FormOutlined /> 
+                    <FormOutlined /> 
                     <span>จองหอพัก</span>
                   </span>
                 }
+                onTitleClick={() => setCurrentPage("dorm")}
               >
                 <Menu.Item key="mainDorm1">
-                  <Link to="/dorm-booking/mainDorm1">
+                  <Link to="/dorm/mainDorm1">
                     <span>หอพักชาย 1</span>
                   </Link>
                 </Menu.Item>
@@ -215,7 +215,7 @@ const FullLayout: React.FC = () => {
               <Route path="/personal/create" element={<PersonalCreate />} />
              <Route path="/personal/edit/:id" element={<PersonalChange />} /> 
               <Route path="/payment" element={<Paymentpages />} />
-              <Route path="/dorm-booking" element={<DormBookingpages />} />
+              <Route path="/dorm/mainDorm1" element={<MainDorm1 />} />
               <Route path="/list" element={<Listpages />} />
               <Route path="/repair" element={<Repairpages />} />
               <Route path="/form/DelayedPayment" element={<DelayedPaymentpages />} />
