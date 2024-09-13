@@ -67,39 +67,38 @@ function MainDorm1() {
     {
       floor: 2,
       rooms: [
-        { roomNumber: "1200", occupancy: "0/3" },
-        { roomNumber: "1201", occupancy: "0/3" },
-        { roomNumber: "1202", occupancy: "0/3" },
-        { roomNumber: "1203", occupancy: "0/3" },
-        { roomNumber: "1204", occupancy: "0/3" },
-        { roomNumber: "1205", occupancy: "0/3" },
-        { roomNumber: "1206", occupancy: "0/3" },
-        { roomNumber: "1207", occupancy: "0/3" },
-        { roomNumber: "1208", occupancy: "0/3" },
-        { roomNumber: "1209", occupancy: "0/3" },
+        { roomNumber: "2200", occupancy: "0/3" },
+        { roomNumber: "2201", occupancy: "0/3" },
+        { roomNumber: "2202", occupancy: "0/3" },
+        { roomNumber: "2203", occupancy: "0/3" },
+        { roomNumber: "2204", occupancy: "0/3" },
+        { roomNumber: "2205", occupancy: "0/3" },
+        { roomNumber: "2206", occupancy: "0/3" },
+        { roomNumber: "2207", occupancy: "0/3" },
+        { roomNumber: "2208", occupancy: "0/3" },
+        { roomNumber: "2209", occupancy: "0/3" },
         // ห้องอื่นๆ...
       ],
     },
     {
       floor: 3,
       rooms: [
-        { roomNumber: "1300", occupancy: "0/3" },
-        { roomNumber: "1301", occupancy: "0/3" },
-        { roomNumber: "1302", occupancy: "0/3" },
-        { roomNumber: "1303", occupancy: "0/3" },
-        { roomNumber: "1304", occupancy: "0/3" },
-        { roomNumber: "1305", occupancy: "0/3" },
-        { roomNumber: "1306", occupancy: "0/3" },
-        { roomNumber: "1307", occupancy: "0/3" },
-        { roomNumber: "1308", occupancy: "0/3" },
-        { roomNumber: "1309", occupancy: "0/3" },
+        { roomNumber: "3300", occupancy: "0/3" },
+        { roomNumber: "3301", occupancy: "0/3" },
+        { roomNumber: "3302", occupancy: "0/3" },
+        { roomNumber: "3303", occupancy: "0/3" },
+        { roomNumber: "3304", occupancy: "0/3" },
+        { roomNumber: "3305", occupancy: "0/3" },
+        { roomNumber: "3306", occupancy: "0/3" },
+        { roomNumber: "3307", occupancy: "0/3" },
+        { roomNumber: "3308", occupancy: "0/3" },
+        { roomNumber: "3309", occupancy: "0/3" },
         // ห้องอื่นๆ...
       ],
     },
   ];
-
   const handleRoomSelect = (roomNumber: string) => {
-    setSelectedRoom(roomNumber);
+    setSelectedRoom(prevSelectedRoom => (prevSelectedRoom === roomNumber ? '' : roomNumber));
   };
 
   return (
