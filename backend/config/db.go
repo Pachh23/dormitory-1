@@ -36,6 +36,10 @@ func SetupDatabase() {
 		&entity.Family{},
 		&entity.Other{},
 		&entity.Personal{},
+		&entity.Dorm{},
+		&entity.Floor{},
+		&entity.Room{},
+		&entity.Reservation{},
 	)
 
 	// Seed ข้อมูลประเภท
@@ -49,6 +53,7 @@ func SetupDatabase() {
 	seedAddresses()
 	seedFamilies()
 	seedOthers()
+	seedDormBooking()
 }
 
 func seedGenders() {
@@ -183,4 +188,51 @@ func seedAdmins() {
 		Password:  adminHashedPassword,
 	}
 	db.FirstOrCreate(admin, entity.Admins{Username: "jetnipat"})
+}
+
+// ------------Dorm-----------//
+
+func seedDormBooking() {
+	dorms := []entity.Dorm{
+		{NameDorm: "หอพักชาย 1"},
+		{NameDorm: "หอพักชาย 2"},
+		{NameDorm: "หอพักหญิง 3"},
+		{NameDorm: "หอพักหญิง 4"},
+	}
+
+	// บันทึกหอพัก
+	for _, dorm := range dorms {
+		db.FirstOrCreate(&dorm, entity.Dorm{NameDorm: dorm.NameDorm})
+	}
+
+	// ดึงข้อมูลหอพักทั้งหมด
+	var allDorms []entity.Dorm
+	db.Find(&allDorms)
+
+	// สร้างชั้นและห้องพักสำหรับแต่ละหอพัก
+	for _, dorm := range allDorms {
+		for floorNum := 1; floorNum <= 3; floorNum++ {
+			// สร้างชั้น (ถ้าต้องการเก็บข้อมูลชั้นแยก)
+			floor := entity.Floor{FloorNumber: floorNum, DormID: dorm.ID}
+			result := db.FirstOrCreate(&floor, entity.Floor{FloorNumber: floorNum, DormID: dorm.ID})
+			if result.Error != nil {
+				fmt.Printf("Error creating floor: %v\n", result.Error)
+				continue
+			}
+
+			// สร้างห้องสำหรับแต่ละชั้น
+			for room := 0; room <= 9; room++ {
+				roomNumber := fmt.Sprintf("%d%d0%d", floorNum, floorNum, room)
+				newRoom := entity.Room{
+					RoomNumber: roomNumber,
+					FloorID:    uint(floorNum), // ใช้หมายเลขชั้นโดยตรงเป็น FloorID
+					DormID:     dorm.ID,
+				}
+				result := db.FirstOrCreate(&newRoom, entity.Room{RoomNumber: roomNumber, FloorID: uint(floorNum), DormID: dorm.ID})
+				if result.Error != nil {
+					fmt.Printf("Error creating room: %v\n", result.Error)
+				}
+			}
+		}
+	}
 }
