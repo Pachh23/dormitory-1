@@ -98,15 +98,38 @@ const FullLayout: React.FC = () => {
                   <span>ข้อมูลส่วนตัว</span>
                 </Link>
               </Menu.Item>
-              <Menu.Item
+
+              <Menu.SubMenu
                 key="dorm-booking"
-                onClick={() => setCurrentPage("dorm-booking")}
+                title={
+                  <span>
+                   <FormOutlined /> 
+                    <span>จองหอพัก</span>
+                  </span>
+                }
               >
-                <Link to="/dorm-booking">
-                 <ApartmentOutlined /> 
-                  <span>จองหอพัก</span>
-                </Link>
-              </Menu.Item>
+                <Menu.Item key="mainDorm1">
+                  <Link to="/dorm-booking/mainDorm1">
+                    <span>หอพักชาย 1</span>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="mainDorm2">
+                  <Link to="/dorm-booking/mainDorm2">
+                    <span>หอพักชาย 2</span>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="mainDorm3">
+                  <Link to="/dorm-booking/mainDorm3">
+                    <span>หอพักหญิง 3</span>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="mainDorm4">
+                  <Link to="/dorm-booking/mainDorm4">
+                    <span>หอพักหญิง 4</span>
+                  </Link>
+                </Menu.Item>
+              </Menu.SubMenu>
+              
               <Menu.Item
                 key="list"
                 onClick={() => setCurrentPage("list")}

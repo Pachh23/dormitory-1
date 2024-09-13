@@ -17,7 +17,7 @@ dayjs.locale('th');
 interface CombinedData extends PersonalInterface, StudentInterface ,AddressInterface, FamilyInterface, OtherInteface{} // Combining both interfaces
 
 function Personal() {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const [studentData, setStudentData] = useState<CombinedData | null>(null); // Store combined data
   const [messageApi, contextHolder] = message.useMessage();
   //const myId = localStorage.getItem("id");
@@ -278,11 +278,11 @@ function Personal() {
         </Col>
         <Col span={12} style={{ textAlign: "end", alignSelf: "center" }}>
           <Space>
-            <Link to="/personal/create">
+          {/*  <Link to="/personal/create">
               <Button type="primary" icon={<PlusOutlined />}>
                 สร้างข้อมูล
               </Button>
-            </Link>
+            </Link>*/}
           {studentData && (
             <Link to={`/personal/edit/${studentData.ID}`}>
               <Button type="primary" icon={<EditOutlined />}>
