@@ -110,6 +110,7 @@ func seedStudents() {
 		db.FirstOrCreate(&student, entity.Students{StudentID: student.StudentID})
 	}
 }
+
 func seedPersonals() {
 	for i := 1; i <= 5; i++ {
 		personal := entity.Personal{
@@ -125,6 +126,7 @@ func seedPersonals() {
 		db.FirstOrCreate(&personal, entity.Personal{StudentID: personal.StudentID})
 	}
 }
+
 func seedAddresses() {
 	for i := 1; i <= 5; i++ {
 		address := entity.Address{
@@ -142,6 +144,7 @@ func seedAddresses() {
 		db.FirstOrCreate(&address, entity.Address{StudentID: address.StudentID})
 	}
 }
+
 func seedFamilies() {
 	for i := 1; i <= 5; i++ {
 		family := entity.Family{
@@ -156,6 +159,7 @@ func seedFamilies() {
 		db.FirstOrCreate(&family, entity.Family{StudentID: family.StudentID})
 	}
 }
+
 func seedOthers() {
 	for i := 1; i <= 5; i++ {
 		other := entity.Other{
@@ -224,8 +228,13 @@ func seedDormBooking() {
 					RoomNumber: roomNumber,
 					FloorID:    uint(floorNum), // ใช้หมายเลขชั้นโดยตรงเป็น FloorID
 					DormID:     dorm.ID,
+					Occupancy:  "0/3", // เพิ่มค่า Occupancy เป็น "0/3"
 				}
-				result := db.FirstOrCreate(&newRoom, entity.Room{RoomNumber: roomNumber, FloorID: uint(floorNum), DormID: dorm.ID})
+				result := db.FirstOrCreate(&newRoom, entity.Room{
+					RoomNumber: roomNumber,
+					FloorID:    uint(floorNum),
+					DormID:     dorm.ID})
+
 				if result.Error != nil {
 					fmt.Printf("Error creating room: %v\n", result.Error)
 				}

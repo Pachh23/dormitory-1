@@ -14,6 +14,7 @@ import (
 	"dormitory.com/dormitory/controller/other"
 	"dormitory.com/dormitory/controller/personal"
 	personaldetails "dormitory.com/dormitory/controller/personalDetails"
+	"dormitory.com/dormitory/controller/room"
 	"dormitory.com/dormitory/controller/student"
 	"dormitory.com/dormitory/middlewares"
 	"github.com/gin-gonic/gin"
@@ -59,6 +60,9 @@ func main() {
 		// Other Route
 		router.GET("/get-other/:id", other.GetOther)
 		router.PUT("/update-other/:id", other.UpdateOther)
+
+		// Room Route
+		router.GET("/get-room/:id", room.GetRoomsByFloorAndDorm)
 
 	}
 	r.GET("/genders", genders.GetAll)

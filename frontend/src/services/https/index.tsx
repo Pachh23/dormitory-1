@@ -131,7 +131,26 @@ async function UpdateFamilyById(id: string, data: FamilyInterface) {
     .then((res) => res)
     .catch((e) => e.response);
 }
+//-------------room----------------
 
+async function GetRoomById(id: string) {
+  return await axios
+    .get(`${apiUrl}/get-room/${id}`, requestOptions)
+    .then((res) => res)
+    .catch((e) => e.response);
+}
+
+async function GetRoomsByFloorAndDorm(floorId: number, dormId: number) {
+  try {
+    const response = await axios.get(`${apiUrl}/rooms/floor/${floorId}/dorm/${dormId}`, requestOptions);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) { 
+      return { error: error.response ? error.response.data : "An error occurred" };
+    }
+    return { error: "An unknown error occurred" }; 
+  }
+}
 export {
   SignInStudent,
   SignInAdmin,
@@ -150,5 +169,7 @@ export {
   PersonalChange,
   UpdateAddressById,
   UpdateOtherById,
-  UpdateFamilyById
+  UpdateFamilyById,
+  GetRoomById,
+  GetRoomsByFloorAndDorm
 };
