@@ -6,7 +6,7 @@ import "../../App.css";
 import { HomeOutlined, UserAddOutlined} from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu, theme, Button, message } from "antd";
 import logo from "../../assets/logo.png";
-import Adminpages from "../../pages/adminpage";
+//import Announcementpages from "../../pages/adminpages/Announcementpages";
 import Student from"../../pages/student";
 import StudentCreate from"../../pages/student/create";
 import StudentEdit from"../../pages/student/edit";
@@ -110,7 +110,7 @@ const AdminLayout: React.FC = () => {
             }}
           >
             <Routes>
-              <Route path="/" element={<Adminpages />} />
+            {/*  <Route path="/" element={<Announcementpages />} /> */}
               <Route path="/student" element={<Student />} />
               <Route path="/student/create" element={<StudentCreate />} />
               <Route path="/student/edit/:id" element={<StudentEdit />} />

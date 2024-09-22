@@ -15,4 +15,6 @@ type Admins struct {
 	Phone     string
 	Birthday  time.Time
 	Password  string `json:"password"`
+
+	Announcement []Announcement `gorm:"foreignKey:AdminID"`
 }

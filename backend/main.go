@@ -64,6 +64,9 @@ func main() {
 		// Room Route
 		router.GET("/get-room/:id", room.GetRoomsByFloorAndDorm)
 
+		// ข่าวสาร
+		//router.POST("/create-announcement", announcement.CreateAnnouncement)
+
 	}
 	r.GET("/genders", genders.GetAll)
 	r.GET("/familyStatuses", familystatuses.GetAll)

@@ -40,6 +40,7 @@ func SetupDatabase() {
 		&entity.Floor{},
 		&entity.Room{},
 		&entity.Reservation{},
+		&entity.Announcement{},
 	)
 
 	// Seed ข้อมูลประเภท
